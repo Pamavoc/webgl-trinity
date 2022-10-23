@@ -1,0 +1,45 @@
+=font-face($font-name, $file-name, $weight: normal, $style: normal)
+	@font-face
+		font-family: quote($font-name)
+		font-display: swap
+		// src: url($file-name + '.eot')
+		// src: url($file-name + '.eot?#iefix') format('embedded-opentype'), url($file-name + '.woff2') format('woff2'), url($file-name + '.woff') format('woff'), url($file-name + '.ttf') format('truetype'), url($file-name + '.svg##{$font-name}') format('svg')
+		src: url($file-name + '.woff2') format('woff2'), url($file-name + '.woff') format('woff')
+		font-weight: $weight
+		font-style: $style
+
+@function strip-unit($num)
+	@return math.div($num, $num * 0 + 1)
+
+=breakpoints-from-index($i)
+	$values: map-values($break)
+	$current: nth($values, $i)
+	$next: null
+
+	@if $i + 1 <= length($values)
+		$next: nth($values, $i + 1)
+
+	@if $i == 1
+		@media (min-width: $next + 1px)
+			@content
+
+	@else
+		@if $next
+			@media (min-width: $next + 1px) and (max-width: $current)
+				@content
+
+		@else
+			@media (max-width: $current)
+				@content
+
+=resp($prop, $values...)
+
+	$value: nth($values, 1)
+
+	@for $i from 1 through length($break)
+
+		@if $i <= length($values)
+			$value: nth($values, $i)
+
+		+breakpoints-from-index($i)
+			#{$prop}: $value

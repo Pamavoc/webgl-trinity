@@ -1,0 +1,36 @@
+html
+
+	// Max
+
+	@media (min-width: $break-max + 1px)
+		font-size: #{math.div($break-max,break(laptop))*10}px
+
+	// For all other breakpoint
+
+	@each $key, $value in $break
+		$i: index($break, $key $value)
+		$values: map-values($break)
+		$current: nth($values, $i)
+		$next: null
+
+		@if $i + 1 <= length($values)
+			$next: nth($values, $i + 1)
+			$next: nth(map-values($break), $i + 1)
+
+		// @if $next
+		//   order: $next
+
+		// Default
+
+		@if $i == 1
+			font-size: #{(math.div(1,strip-unit($value)) * 1000)}vw
+
+		@else
+
+			@if $next
+				@media (min-width: $next + 1px) and (max-width: $current)
+					font-size: #{math.div(1, strip-unit($value)) * 1000}vw
+
+			@else
+				@media (max-width: $current)
+					font-size: #{math.div(1, strip-unit($value)) * 1000}vw
