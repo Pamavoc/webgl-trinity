@@ -3,7 +3,7 @@ import studio from '@theatre/studio';
 
 export default class Animations {
   constructor() {
-    studio.initialize();
+   // studio.initialize();
     console.log(studio);
 
     const project = this.createProject('THREE.js x Theatre.js');

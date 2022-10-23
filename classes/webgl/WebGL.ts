@@ -39,8 +39,8 @@ export default class WebGL {
     this.clock = new THREE.Clock();
     this.loader = new Loader({ webgl: this });
 
-    this.camera = new Camera(50, this.width / this.height, 0.5, 1000); // perspective camera
-    //this.camera = new Camera(75, this.width, this.height, 0, 1000); // ortho camera
+    //this.camera = new Camera(50, this.width / this.height, 0.5, 1000); // perspective camera
+    this.camera = new Camera(75, this.width, this.height, 0, 1000); // ortho camera
     this.renderer = new Renderer(this.width, this.height);
     this.scene = new Scene(this);
 
@@ -54,45 +54,8 @@ export default class WebGL {
    
     this.setEvents();
 
-
-
-    if(window.location.pathname === "/scene") {
-
-      document.body.addEventListener('keydown', e => {
-        e.preventDefault()
-      
-        console.log(e)
-
-        if(e.code === "Digit1") {
-
-          this.switchMap('TOUR1.glb')          
-
-        } else if(e.code === "Digit2") {
-
-          this.switchMap('TOUR2.glb')          
-
-        } else if(e.code === "Digit3") {
-
-
-          this.switchMap('TOUR3.glb') 
-
-        } else if(e.code === "Digit4") {
-
-
-          this.switchMap('TOUR4.glb') 
-
-        } else if(e.code === "Digit5") {
-
-          this.switchMap('TOUR5.glb') 
-
-        } else if(e.code === "Digit6") {
-
-          this.switchMap('TOUR6.glb') 
-
-        } 
-    
-      });
-    }
+    this.loadMap('trinity.glb')
+   
 
   }
 
@@ -105,7 +68,7 @@ export default class WebGL {
 
 
   loadMap = async (new_map) => {
-    this.loader.load(`src/assets/3d/maps/${new_map}`).then((result) => {
+    this.loader.load(`/${new_map}`).then((result) => {
       console.log("new map added")
       this.scene.instance.add(result)
     })
@@ -119,28 +82,6 @@ export default class WebGL {
     console.log('old map removed')
     return 'old map removed'
 
-  }
-
-  applyChanges = async (data) => {
-
-    // si on a des changements de map, on les applique
-    if (Object.keys(data.map_changes).length !== 0) {
-
-      const new_map = data.map_changes.gltf
-      if (new_map) this.loadMap(new_map)
-
-      const newFieldsColor = data.map_changes.fields_color
-      const newFogColor = data.map_changes.fog_color;
-      const newGroundColor = data.map_changes.ground_color;
-      const newTreesColor = data.map_changes.trees_color;
-
-      if (newFieldsColor) this.materials.changeField(newFieldsColor)
-      if (newFogColor) this.scene.changeFog(newFogColor)
-      if (newGroundColor) this.materials.changeGround(newGroundColor)
-      if (newTreesColor) this.materials.changeTree(newTreesColor)
-
-      // this.camera.moveMapAfterChange()
-    }
   }
 
 
@@ -177,7 +118,6 @@ export default class WebGL {
     //this.raycast.raycastHover()
 
     // Controls
-    //this.controls.update();
 
     // Scene
     this.scene.update();

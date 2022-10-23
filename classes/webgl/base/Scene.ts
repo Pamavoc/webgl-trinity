@@ -90,15 +90,16 @@ export default class Scene {
 
     const elapsedTime = this.clock.getElapsedTime();
 
-    const camera_h = this.camera.position.y * 0.8;
+    //const camera_h = this.camera.position.y * 0.8;
     // console.log(camera_h)
 
-    this.instance.fog.near = camera_h + 4;
-    this.instance.fog.far = camera_h * 0.6 + 24;
+    //this.instance.fog.near = camera_h + 4;
+    //this.instance.fog.far = camera_h * 0.6 + 24;
 
     this.webgl.materials.update(elapsedTime);
 
     this.controls.update();
+    
   }
 
   render() {

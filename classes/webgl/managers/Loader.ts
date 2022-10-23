@@ -37,12 +37,7 @@ export default class Loader {
 
           gltf.scene.traverse(child => {
 
-            // if (child.name === 'fumée') {
-            //   // todo fumée 
-            // }
-
-
-
+      
             if (child.isMesh) {
               child.geometry.computeVertexNormals();
 
@@ -73,28 +68,7 @@ export default class Loader {
 
           });
 
-          // second trees
-          gltf.scene.traverse(child => {
-            if (child.isGroup && /tree/ig.test(child.name)) {
-              child.children.forEach(mesh => {
-                mesh.material = this.webgl.materials.treeMaterial
-              })
-            }
-          })
-
-          //water replace
-          const water = gltf.scene.getObjectByName('eau', true)
-          water.removeFromParent()
-          const water_geometry = new THREE.PlaneGeometry(200, 200, 800, 800);
-          const water_mesh = new THREE.Mesh(water_geometry, this.webgl.materials.waterMaterial);
-          water_mesh.rotation.set(-Math.PI / 2, 0, 0);
-          water_mesh.position.set(0, 0.1, 0);
-          gltf.scene.add(water_mesh)
-
-
-
-
-
+        
           //console.log(gltf.scene);
           resolve(gltf.scene);
 

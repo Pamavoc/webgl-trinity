@@ -6,7 +6,6 @@ export default class Controls {
 
   constructor(camera: PerspectiveCamera, renderer: Renderer) {
     this.instance = new OrbitControls(camera, renderer.domElement);
-    // this.instance.position.z = 5;
   }
 
   update() {
