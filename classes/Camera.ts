@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { PerspectiveCamera } from 'three';
 
+
+
 import useDebug from '@/composables/useDebug';
 
 
@@ -10,13 +12,17 @@ export default class Camera {
   animations: any
   coordinates: any
   lookTarget: any
+  controls: any
 
   constructor(fov: number, width: number, near: number, far: number, height?: number) {
     this.instance = new PerspectiveCamera(fov, width, near, far);
-    //this.instance.position.z = -5;
+   
+    this.instance.position.z = -5;
     //this.instance = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 0, 10000 );
     //this.animations = useAnimations()
   }
+
+  
 
   tweak() {
     const debug = useDebug();

@@ -36,6 +36,8 @@ export default class Scene {
     
     this.createFog();
     this.controls = new Controls(this.camera, this.renderer);
+    console.log(this.controls)
+   
     this.createLights()
   
   }
@@ -88,7 +90,7 @@ export default class Scene {
 
   preRender() {
 
-   // const elapsedTime = this.clock.getElapsedTime();
+    const elapsedTime = this.clock.getElapsedTime();
 
     //const camera_h = this.camera.position.y * 0.8;
     // console.log(camera_h)
@@ -98,7 +100,8 @@ export default class Scene {
 
    // this.webgl.materials.update(elapsedTime);
 
-    this.controls.update();
+    //this.controls.update();
+    
     
   }
 

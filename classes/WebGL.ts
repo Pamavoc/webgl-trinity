@@ -7,6 +7,7 @@ import Loader from '@/classes/Loader';
 import Scene from '@/classes/Scene';
 import Materials from '@/classes/Materials';
 
+
 export default class WebGL {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
@@ -93,6 +94,7 @@ export default class WebGL {
     window.addEventListener('resize', this.onResize);
     window.addEventListener('mousemove', this.raycast.onMouseMove);
     window.addEventListener('click', this.raycast.onClick);
+    
   };
 
   removeEvents = () => {
@@ -117,7 +119,7 @@ export default class WebGL {
     //this.raycast.raycastHover()
 
     // Controls
-
+    this.scene.controls.update()
     // Scene
     this.scene.update();
   }
