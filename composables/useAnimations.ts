@@ -1,4 +1,4 @@
-import Animations from '@/classes/webgl/managers/Animations';
+import Animations from '@/classes/Animations';
 
 let animations: Animations | null = null
 

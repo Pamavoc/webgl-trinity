@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Animations from '../managers/Animations'
+import Animations from '@/classes/Animations'
 
 export default class Raycaster {
 

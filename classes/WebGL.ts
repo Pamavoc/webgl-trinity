@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import { ObjectType } from '@/classes/webgl/interfaces/ObjectType';
-import Raycaster from '@/classes/webgl/base/Raycaster';
-import Camera from '@/classes/webgl/base/Camera';
-import Renderer from '@/classes/webgl/base/Renderer';
-import Loader from '@/classes/webgl/managers/Loader';
-import Scene from '@/classes/webgl/base/Scene';
-import Materials from '@/classes/webgl/base/Materials';
+import { ObjectType } from '@/classes/interfaces/ObjectType';
+import Raycaster from '@/classes/Raycaster';
+import Camera from '@/classes/Camera';
+import Renderer from '@/classes/Renderer';
+import Loader from '@/classes/Loader';
+import Scene from '@/classes/Scene';
+import Materials from '@/classes/Materials';
 
 export default class WebGL {
   scene: THREE.Scene;
@@ -25,7 +25,6 @@ export default class WebGL {
 
   raycast: Raycaster;
   emitter: any;
-  data: any
 
   constructor({ emitter }) {
     // ARGS
@@ -39,8 +38,8 @@ export default class WebGL {
     this.clock = new THREE.Clock();
     this.loader = new Loader({ webgl: this });
 
-    //this.camera = new Camera(50, this.width / this.height, 0.5, 1000); // perspective camera
-    this.camera = new Camera(75, this.width, this.height, 0, 1000); // ortho camera
+    this.camera = new Camera(50, this.width / this.height, 0.5, 1000); // perspective camera
+    //this.camera = new Camera(75, this.width, this.height, 0, 1000); // ortho camera
     this.renderer = new Renderer(this.width, this.height);
     this.scene = new Scene(this);
 

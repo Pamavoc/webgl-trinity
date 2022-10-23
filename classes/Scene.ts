@@ -88,7 +88,7 @@ export default class Scene {
 
   preRender() {
 
-    const elapsedTime = this.clock.getElapsedTime();
+   // const elapsedTime = this.clock.getElapsedTime();
 
     //const camera_h = this.camera.position.y * 0.8;
     // console.log(camera_h)
@@ -96,7 +96,7 @@ export default class Scene {
     //this.instance.fog.near = camera_h + 4;
     //this.instance.fog.far = camera_h * 0.6 + 24;
 
-    this.webgl.materials.update(elapsedTime);
+   // this.webgl.materials.update(elapsedTime);
 
     this.controls.update();
     

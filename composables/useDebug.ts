@@ -1,4 +1,4 @@
-import Debug from '@/classes/webgl/managers/Debug';
+import Debug from '@/classes/Debug';
 
 let debug: Debug | null = null
 

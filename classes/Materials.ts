@@ -21,9 +21,9 @@ export default class Materials {
 		this.tweak()
 
 		this.webgl.scene.changeFog('light_blue')
-    this.changeField('brown')
-    this.changeGround('default')
-    this.changeTree('brown')
+    	this.changeField('brown')
+    	this.changeGround('default')
+    	this.changeTree('brown')
 
 	}
 
@@ -216,10 +216,6 @@ export default class Materials {
 		if (treeShader) {
 			treeShader.uniforms.uTime.value = time;
 		}
-
-
-
-
 		this.waterMaterial.uniforms.uTime.value = time * 0.8;
 
 	}

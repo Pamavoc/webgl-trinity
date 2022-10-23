@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, render, onUnmounted } from 'vue';
-import WebGL from '@/classes/webgl/WebGL';
+import WebGL from '@/classes/WebGL';
 
 
 export default defineComponent({
@@ -38,6 +38,7 @@ export default defineComponent({
   left: 0
   height: 100vh
   width: 100vw
+  z-index: 99999
 
   canvas
     height: 100%
