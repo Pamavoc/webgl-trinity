@@ -15,9 +15,13 @@ export default defineComponent({
 
       const raf = useRAF();
       const emitter = useEmitter();
-     
+      
 
-      const webGL = new WebGL({ emitter });
+      const { $audio_manager } = useNuxtApp()
+      const audio_manager = $audio_manager
+
+
+      const webGL = new WebGL({ emitter, audio_manager });
       raf.subscribe('WebGL', () => webGL.update());
 
     });
@@ -38,7 +42,7 @@ export default defineComponent({
   left: 0
   height: 100vh
   width: 100vw
-  z-index: 99999
+  
 
   canvas
     height: 100%

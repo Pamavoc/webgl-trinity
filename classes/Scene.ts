@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Controls from './Controls';
+import PostProcess from '@/classes/PostProcessing';
 
 export default class Scene {
   renderer: any;
@@ -21,8 +22,8 @@ export default class Scene {
   constructor(webgl) {
 
     this.params = {
-      background: 0x6f6f6f,
-      ambient_light: 0x404040,
+      background: 0x080808,
+      ambient_light: 0x020202,
       directional_light: 0xffffff,
       mat_color: 0xffffff,
     }
@@ -33,7 +34,8 @@ export default class Scene {
     this.camera = webgl.camera.instance;
     this.webgl = webgl;
     this.clock = new THREE.Clock();
-    
+    this.postProcess = new PostProcess({ scene: this })
+ 
     this.createFog();
     this.controls = new Controls(this.camera, this.renderer);
     console.log(this.controls)
@@ -62,7 +64,9 @@ export default class Scene {
       grey1: 0xa5a5a5,
       grey2: 0x727272,
       grey3: 0x525252,
-      light_blue: 0x95aebf
+      light_blue: 0x95aebf, 
+      black: 0x080808,
+      green: 0x1ECA9A
     }
 
     this.instance.fog.color.setHex(colors[newColor])
@@ -92,25 +96,28 @@ export default class Scene {
 
     const elapsedTime = this.clock.getElapsedTime();
 
-    //const camera_h = this.camera.position.y * 0.8;
+    const camera_h = this.camera.position.y * 0.8;
     // console.log(camera_h)
 
-    //this.instance.fog.near = camera_h + 4;
-    //this.instance.fog.far = camera_h * 0.6 + 24;
+    // console.log(this.camera.position)
 
-   // this.webgl.materials.update(elapsedTime);
+    this.instance.fog.near = camera_h + 4;
+    this.instance.fog.far = camera_h * 0.6 + 24;
 
-    //this.controls.update();
+    this.webgl.materials.update(elapsedTime);
+
+    this.controls.update();
     
     
   }
 
   render() {
     this.renderer.render(this.instance, this.camera);
-    //this.postProcess.render();
+   
   }
 
   postRenderer() {
+    this.postProcess.render();
   }
 
   update() {

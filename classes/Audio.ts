@@ -1,25 +1,28 @@
 import { Howl, Howler } from 'howler';
 
+
+
 export default class Audio {
 	sounds: any
+	audio_manager: any
 
 	constructor() {
 
+	
+		
 		this.load()		
 	}
 	
+	
 	start(){
-		this.play('backgroundMusic')
-		this.play('crowd')
-		this.play('nature')
-		this.play('industry')
+		this.play('trinity_intro')
 
 	}
 
 	load() {
 		this.sounds = {
-			train: new Howl({
-				src: ['@/assets/sounds/Train_sound.mp3'],
+			trinity_intro: new Howl({
+				src: ['/sounds/Initialisation.mp3'],
 			}),
 		}
 	}
@@ -32,4 +35,6 @@ export default class Audio {
 
 		this.sounds[sound].stop()
 	}
+
+	
 }

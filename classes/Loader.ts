@@ -37,28 +37,28 @@ export default class Loader {
 
           gltf.scene.traverse(child => {
 
-      
+            console.log(child.name)
+          
             if (child.isMesh) {
               child.geometry.computeVertexNormals();
 
-              // if (child.name === 'trees') {
-              if (/tree/ig.test(child.name)) {
-                child.material = this.webgl.materials.treeMaterial
-              }
-              else if (child.name === 'carte') {
-                child.material = this.webgl.materials.groundMaterial
-              }
-              else if (child.name === 'eau') {
-                // child.removeFromParent()
-                // child.material = this.webgl.materials.waterMaterial
-              }
-              else if (child.name === 'champs') {
-                child.material = this.webgl.materials.fieldMaterial
+              if (/screen/ig.test(child.name) || /led/ig.test(child.name) || child.name === 'face-left' || child.name === 'face-right') {
+                child.material = this.webgl.materials.screenMaterial
               }
 
-              else if (child.name === 'champs') {
-                // child.position.y += 0.1;
-                child.material = this.webgl.materials.defaultMaterial
+              else if(/light-face/ig.test(child.name)) {
+                child.material = this.webgl.materials.trinityMaterial
+              }
+
+              else if (child.name === 'sol') {
+                child.material = this.webgl.materials.solMaterial
+              }
+              else if(/trinity/ig.test(child.name)) {
+                child.material = this.webgl.materials.trinityMaterial
+              }
+
+              else if (child.name === 'cable') {
+                child.material = this.webgl.materials.cableMaterial
               }
 
               else {

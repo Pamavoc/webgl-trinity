@@ -11,6 +11,6 @@ export default class Controls {
 
   update() {
     this.instance.update();
-    //console.log("update")
+    
   }
 }

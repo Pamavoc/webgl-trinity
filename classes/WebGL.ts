@@ -6,7 +6,7 @@ import Renderer from '@/classes/Renderer';
 import Loader from '@/classes/Loader';
 import Scene from '@/classes/Scene';
 import Materials from '@/classes/Materials';
-
+import AudioManager from './utils/audio';
 
 export default class WebGL {
   scene: THREE.Scene;
@@ -17,9 +17,10 @@ export default class WebGL {
   rafUpdate: Function | null = null;
   animations: any
   materials: Materials
-
+  audio: any
   width: number;
   height: number;
+  audio_manager: AudioManager;
 
   debug: boolean;
   params: ObjectType;
@@ -27,9 +28,11 @@ export default class WebGL {
   raycast: Raycaster;
   emitter: any;
 
-  constructor({ emitter }) {
+  constructor({ emitter, audio_manager}) {
     // ARGS
     this.emitter = emitter;
+    this.audio_manager = audio_manager
+
 
     // VARS
     this.width = window.innerWidth;
@@ -50,15 +53,34 @@ export default class WebGL {
       this.renderer.instance
     );
 
+
     this.materials = new Materials({ webgl: this })
    
     this.setEvents();
 
     this.loadMap('trinity.glb')
-   
+
+    
+
+    document.querySelector('.button-start').addEventListener('click', ()=> {
+      this.startManager()
+    })
+    
 
   }
 
+  startManager() {
+    this.audio_manager.start( {
+      onBeat: this.onBeat,
+      live: false,
+      src: '/sounds/ambient-1.mp3',
+      debug: true
+    })
+  }
+
+  onBeat() {
+    console.log(this.onBeat)
+  }
 
 
   switchMap = (map) => {
@@ -118,8 +140,7 @@ export default class WebGL {
     // Raycaster
     //this.raycast.raycastHover()
 
-    // Controls
-    this.scene.controls.update()
+
     // Scene
     this.scene.update();
   }
