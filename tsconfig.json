@@ -1,5 +1,12 @@
 {
   // https://v3.nuxtjs.org/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
-  "exclude": ["@/assets/glsl/"]
+  "exclude": ["@/assets/glsl/"],
+  "compilerOptions": {
+    "typeRoots": [
+      "@/classes/interfaces"
+    ],
+    "allowJs": true,
+    "suppressImplicitAnyIndexErrors": true
+  }
 }
