@@ -29,14 +29,11 @@ export default class PostProcess {
         
         this.init()
         this.tweak()
-       
-        
     }
 
     async init() {
           
         this.composer.addPass(new RenderPass(this.scene.instance, this.camera));
-
 
 		this.effect = new SelectiveBloomEffect(this.scene, this.camera, {
 			blendFunction: this.params.blendFunction,
@@ -49,8 +46,6 @@ export default class PostProcess {
 		this.effect.inverted = true;
 		const effectPass = new EffectPass(this.camera, this.effect);
 		this.composer.addPass(effectPass);
-
-
         this.composer.addPass(new EffectPass(this.camera, this.effect));
     }
 

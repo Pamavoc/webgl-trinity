@@ -16,13 +16,14 @@ export default defineComponent({
       const raf = useRAF();
       const emitter = useEmitter();
       
+  
+  
+      const webGL = new WebGL({ emitter });
+      raf.subscribe('WebGL', () => { 
+        webGL.update();
 
-      const { $audio_manager } = useNuxtApp()
-      const audio_manager = $audio_manager
-
-
-      const webGL = new WebGL({ emitter, audio_manager });
-      raf.subscribe('WebGL', () => webGL.update());
+       
+      });
 
     });
 

@@ -42,7 +42,7 @@ export default class Loader {
             if (child.isMesh) {
               child.geometry.computeVertexNormals();
 
-              if (/screen/ig.test(child.name) || /led/ig.test(child.name) || child.name === 'face-left' || child.name === 'face-right') {
+              if (/screen/ig.test(child.name) || child.name === 'face-left' || child.name === 'face-right') {
                 child.material = this.webgl.materials.screenMaterial
               }
 
@@ -57,7 +57,7 @@ export default class Loader {
                 child.material = this.webgl.materials.trinityMaterial
               }
 
-              else if (child.name === 'cable') {
+              else if (child.name === 'cable' || /led/ig.test(child.name)) {
                 child.material = this.webgl.materials.cableMaterial
               }
 

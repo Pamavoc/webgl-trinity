@@ -10,12 +10,13 @@ attribute vec4 color;
 varying vec3 vPosition;
 varying vec4 vColor;
 
-void main()	{
+attribute vec2 uv;
+varying vec2 vUv;
 
-    vPosition = position;
+
+void main()	{
+	vUv = uv * uTime;
+	
 	vColor = color;
 	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 }
-
-
-

@@ -1,15 +1,22 @@
-<template lang="">
+<template>
     <div class="ui">
-        <button class="button-start">Play</button>
-        <canvas class="audio-visualizer"></canvas>
-        <p class="output"></p>
+        <button class="button-start" @click="startAudio">Start</button>
+       <!-- <AudioManager v-if="audio_started.value === true"></AudioManager>   -->
     </div>
 </template>
-<script>
-export default {
-    
+<script setup>
+const emitter = useEmitter()
+const audio_started = ref(false)
+
+function startAudio() {
+     console.log('started')
+    audio_started.value = true
+    emitter.emit('audio_started')
 }
+
 </script>
+
+
 <style lang="sass">
 .ui 
     position: fixed

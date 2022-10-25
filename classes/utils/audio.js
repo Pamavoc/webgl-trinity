@@ -58,8 +58,9 @@ class AudioManager {
 
 	}
 
-	start({ onLoad = null, onBeat = null, live = true, analyze = true, debug = false, playlist = ["/sounds/Initialisation.mp3"], shutup = false, src = null } = {}) {
+	start({ onLoad = null, onBeat = null, live = true, analyze = true, debug = false, playlist = ['/sounds/initialisation.mp3', '/sounds/megatron.mp3'], shutup = false, src = null } = {}) {
 
+		console.log(onBeat)
 		this.debug = debug
 		this.playlist = playlist
 		this.live = live
@@ -103,6 +104,10 @@ class AudioManager {
 		if (this.currentPlay >= this.playlist.length) {
 			this.currentPlay = 0
 		}
+
+		console.log("play next")
+
+		this._src = this.playlist[this.currentPlay];
 
 		this.audio = document.createElement('audio')
 		this.audio.src = this._src
