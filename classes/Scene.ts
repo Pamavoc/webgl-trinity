@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import Controls from './Controls';
 import PostProcess from '@/classes/PostProcessing';
+import Smoke from '@/classes/Smoke';
 
 export default class Scene {
   renderer: any;
@@ -18,6 +19,7 @@ export default class Scene {
   lights: any
   postProcess: any
   clock: any
+  smoke: any
 
   constructor(webgl) {
 
@@ -33,12 +35,17 @@ export default class Scene {
     this.renderer = webgl.renderer.instance;
     this.camera = webgl.camera.instance;
     this.webgl = webgl;
+
+    this.smoke = new Smoke({ webgl: this.webgl, scene: this })
+
     this.clock = new THREE.Clock();
     this.postProcess = new PostProcess({ scene: this })
  
     this.createFog();
     this.controls = new Controls(this.camera, this.renderer);
     console.log(this.controls)
+  
+    // this.changeFog('green')
    
     this.createLights()
   
@@ -101,19 +108,17 @@ export default class Scene {
 
     // console.log(this.camera.position)
 
+    this.smoke.update()
+
     this.instance.fog.near = camera_h + 4;
     this.instance.fog.far = camera_h * 0.6 + 24;
 
     this.webgl.materials.update(elapsedTime);
-
     this.controls.update();
-    
-    
   }
 
   render() {
     this.renderer.render(this.instance, this.camera);
-   
   }
 
   postRenderer() {

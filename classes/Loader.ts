@@ -57,8 +57,12 @@ export default class Loader {
                 child.material = this.webgl.materials.trinityMaterial
               }
 
-              else if (child.name === 'cable' || /led/ig.test(child.name)) {
+              else if (child.name === 'cable' || /led/ig.test(child.name) || /light-desk/ig.test(child.name)) {
                 child.material = this.webgl.materials.cableMaterial
+              }
+
+              else if (child.name === 'macbook-apple') {
+                child.material = this.webgl.materials.defaultGreenMaterial
               }
 
               else {

@@ -58,7 +58,7 @@ export default class WebGL {
    
     this.materials = new Materials({ webgl: this })
     this.setEvents();
-    this.loadMap('trinity.glb')
+    this.loadMap('trinity-2.glb')
 
 
     this.emitter.on('audio_started', (e) => {
@@ -67,7 +67,15 @@ export default class WebGL {
       this.audio_manager = useAudio()
      
       this.audio_manager.start( {
-           onBeat: this.onBeat,
+           onBeat: ()=> {
+            console.log("onbeat")
+            this.emitter.emit('beat_sent')
+
+            const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
+
+            console.log(average)
+
+           }, 
            live: false,
            playlist: ['/sounds/initialisation.mp3', '/sounds/megatron.mp3', '/sounds/hillz.mp3']
       })    
@@ -83,6 +91,7 @@ export default class WebGL {
   
   onBeat() {
     
+  
     console.log( this.audio_manager)
     if(this.audio_started) {
       // const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
@@ -153,7 +162,7 @@ export default class WebGL {
     // Audio data
     if(this.audio_started === true) {
         this.audio_manager.update()
-       // console.log(this.audio_manager)
+        //console.log(this.audio_manager.values)
     }
 
 

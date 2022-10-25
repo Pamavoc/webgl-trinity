@@ -114,10 +114,12 @@ void main()	{
 	vUv = uv;
     vPosition = position;
 	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-	//vNoise = snoise(position * uSound3);
+	vNoise = snoise(position * uSound);
 	// vNoise = position * uSound3;
 
-	vNoise = uSound3 * uTime * uSound4;
+  //vNoise = snoise(position * uTime * .1);
+
+	//vNoise = uSound3 * uTime * uSound4;
 }
 
 

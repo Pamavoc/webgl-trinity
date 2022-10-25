@@ -1,4 +1,4 @@
-import {BloomEffect, BlendFunction,SelectiveBloomEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
+import { SMAAEffect, NoiseEffect, BlendFunction,SelectiveBloomEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
 import useDebug from "@/composables/useDebug";
 
 
@@ -21,14 +21,16 @@ export default class PostProcess {
         this.composer = new EffectComposer(this.renderer)    
         this.params = {
             blendFunction: BlendFunction.ADD,
+            blendFunctionNoise: BlendFunction.COLOR_BURN, // substract
 			mipmapBlur: true,
 			luminanceThreshold: 0.5,
 			luminanceSmoothing: 0.1,
-			intensity: 0.92
+			intensity: 2.62
         },
         
         this.init()
         this.tweak()
+        this.events()
     }
 
     async init() {
@@ -43,10 +45,14 @@ export default class PostProcess {
 			intensity: this.params.intensity
 		});
 
+        const noise = new NoiseEffect({ blendFunction: this.params.blendFunctionNoise })
+        const smaa = new SMAAEffect()
+
 		this.effect.inverted = true;
 		const effectPass = new EffectPass(this.camera, this.effect);
 		this.composer.addPass(effectPass);
-        this.composer.addPass(new EffectPass(this.camera, this.effect));
+        this.composer.addPass(new EffectPass(this.camera, smaa, this.effect, noise ));
+        
     }
 
     tweak() {
@@ -71,9 +77,19 @@ export default class PostProcess {
 
         default_page.addInput(this.params, 'mipmapBlur').on('change', (ev) => {
             this.effect.mipmapBlur = ev.value;
-        });
-		
+        });	
 	}
+
+    events() {
+      
+        this.webgl.emitter.on('beat_sent', ()=> {
+            this.effect.intensity += 0.4
+
+            setTimeout(() => {
+                this.effect.intensity -= 0.4
+            }, 200);
+        })
+    }
 
 
 

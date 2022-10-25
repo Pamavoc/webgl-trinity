@@ -107,7 +107,7 @@ class AudioManager {
 
 		console.log("play next")
 
-		this._src = this.playlist[this.currentPlay];
+		this._src = this.playlist[this.currentPlay - 1 ];
 
 		this.audio = document.createElement('audio')
 		this.audio.src = this._src

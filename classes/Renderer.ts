@@ -11,7 +11,9 @@ export default class Renderer {
       canvas: $canvas,
       antialias: false,
       powerPreference: 'high-performance',
-      outputEncoding: sRGBEncoding,
+      //outputEncoding: sRGBEncoding,
+      stencil: false,
+      depth: false
     });
     this.instance.setSize(width, height);
     this.instance.setPixelRatio(Math.min(window.devicePixelRatio, 1, 2));

@@ -15,6 +15,7 @@ import trinityVert from '@/assets/glsl/trinity/trinity.vert';
 export default class Materials {
 	
 	defaultMaterial: any
+	defaultGreenMaterial: any
 	cableMaterial: any
 	screenMaterial: any
 	solMaterial: any
@@ -48,6 +49,8 @@ export default class Materials {
 			vertexShader: cableVert,
 		} );
 
+
+		this.defaultGreenMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x1ECA9A) })
 
 		this.screenMaterial = new THREE.RawShaderMaterial( {
 			uniforms: {
