@@ -36,7 +36,7 @@ export default class Scene {
     this.camera = webgl.camera.instance;
     this.webgl = webgl;
 
-    this.smoke = new Smoke({ webgl: this.webgl, scene: this })
+     this.smoke = new Smoke({ webgl: this.webgl, scene: this })
 
     this.clock = new THREE.Clock();
     this.postProcess = new PostProcess({ scene: this })

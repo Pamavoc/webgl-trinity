@@ -9,14 +9,21 @@ const SPACE_BAR = 1
 
 class AudioManager {
 
-	constructor() {
+	constructor(emitter) {
+		
+		
 		if (window.AudioContext) {
 			this.context = new AudioContext()
+			
 		} else if (window.webkitAudioContext) {
 			this.context = new webkitAudioContext()
 		}
 		this.masterGain = this.context.createGain()
 
+	
+		this.emitter = emitter
+
+		//this.emitter = emitter
 		this.fftSize = 1024
 
 		this.lastTime = Date.now()
@@ -105,9 +112,25 @@ class AudioManager {
 			this.currentPlay = 0
 		}
 
-		console.log("play next")
+		
+		if(this.playlist[this.currentPlay - 1] === "/sounds/megatron.mp3") {
+			// todo emit a chaque fin de son
+			console.log(this.playlist[this.currentPlay - 1])
+
+			this.emitter.emit("song_end", 1)
+
+		} else if(this.playlist[this.currentPlay - 1] === "/sounds/hillz.mp3") {
+
+			console.log(this.playlist[this.currentPlay - 1])
+
+			this.emitter.emit("song_end", 2)
+			
+		}
+
 
 		this._src = this.playlist[this.currentPlay - 1 ];
+
+		
 
 		this.audio = document.createElement('audio')
 		this.audio.src = this._src

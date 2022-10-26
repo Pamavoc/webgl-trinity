@@ -19,7 +19,7 @@ export default class Smoke {
 			'/smoke-green.png',
 		];
 
-		this.amount = 15 / this.textures_path.length; //amount of each shap
+		this.amount = 45 / this.textures_path.length; //amount of each shap
 		this.meshs = [];
 		this.load()
 	}
@@ -51,7 +51,7 @@ export default class Smoke {
 				side: THREE.DoubleSide,
 				alphaTest: 0.1,
 				transparent: true,
-				opacity:0.5,
+				opacity:0.6,
 			});
 
 
@@ -70,7 +70,7 @@ export default class Smoke {
 				// rotation.y = Math.random() * 2 * Math.PI;
 				// rotation.z = Math.random() * 2 * Math.PI;
 				quaternion.setFromEuler(rotation);
-				scale.x = scale.y = scale.z = 0.9 + Math.random() * 0.3;
+				scale.x = scale.y = scale.z = .6 + Math.random() * 0.3;
 				matrix.compose(position, quaternion, scale);
 			};
 
@@ -127,6 +127,9 @@ export default class Smoke {
 				mesh.getMatrixAt(i, matrix);
 				matrix.decompose(transform.position, transform.quaternion, transform.scale);
 				transform.position.y = mesh.defaultHeights[i] + Math.sin((time + i) / 20);
+				//transform.position.x = mesh.defaultHeights[i] + Math.sin((time + i) / 20);
+				//transform.position.z = mesh.defaultHeights[i] + Math.sin((time + i) / 20);
+				
 				
 				transform.quaternion.copy(this.scene.webgl.camera.instance.quaternion);
 				transform.updateMatrix();

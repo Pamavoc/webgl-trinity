@@ -29,6 +29,7 @@ export default class WebGL {
 
   audio_started: boolean;
   audio_manager: any;
+ 
 
   constructor({ emitter }) {
     // ARGS
@@ -63,16 +64,18 @@ export default class WebGL {
 
     this.emitter.on('audio_started', (e) => {
 
+      this.materials.playVideos()
+
       console.log("STARTED AUDIO")
-      this.audio_manager = useAudio()
+      this.audio_manager = useAudio(this.emitter)
      
       this.audio_manager.start( {
            onBeat: ()=> {
-            console.log("onbeat")
+          
             this.emitter.emit('beat_sent')
 
             const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
-
+            console.log(this.audio_manager.volume)
             console.log(average)
 
            }, 

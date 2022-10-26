@@ -17,10 +17,11 @@ function startAudio() {
 </script>
 
 
-<style lang="sass">
-.ui 
-    position: fixed
-    top: 50px
-    z-index: 99999
+<style lang="scss">
+.ui {
+    position: fixed;
+    top: 50px;
+    z-index: 99999;
+}
 
 </style>

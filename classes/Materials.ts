@@ -10,6 +10,9 @@ import screenVert from '@/assets/glsl/screen/screen.vert';
 import trinityFrag from '@/assets/glsl/trinity/trinity.frag';
 import trinityVert from '@/assets/glsl/trinity/trinity.vert';
 
+import cubeFrag from '@/assets/glsl/cube/cube.frag';
+import cubeVert from '@/assets/glsl/cube/cube.vert';
+
 
 
 export default class Materials {
@@ -17,16 +20,22 @@ export default class Materials {
 	defaultMaterial: any
 	defaultGreenMaterial: any
 	cableMaterial: any
+	cubeMaterial2: any
+	cubeMaterial: any
 	screenMaterial: any
 	solMaterial: any
 	trinityMaterial: any
 	webgl: any
+	texture: any
+	texture2: any
+	video: any
+	video2: any
 	
-
 	constructor(args) {
 
 		this.webgl = args.webgl
 
+		this.createVideo()
 		this.create()
 		this.tweak()
 
@@ -36,7 +45,6 @@ export default class Materials {
 	}
 
 	create() {
-
 		this.cableMaterial = new THREE.RawShaderMaterial( {
 			uniforms: {
 				uTime: { value: 0 },
@@ -49,6 +57,23 @@ export default class Materials {
 			vertexShader: cableVert,
 		} );
 
+		this.cubeMaterial = new THREE.RawShaderMaterial( {
+			uniforms: {
+				uTime: { value: 0 },
+				texture: { type: "t", value: this.texture},
+			},
+			fragmentShader: cubeFrag,
+			vertexShader: cubeVert,
+		} );
+
+		this.cubeMaterial2 = new THREE.RawShaderMaterial( {
+			uniforms: {
+				uTime: { value: 0 },
+				texture: { type: "t", value: this.texture2},
+			},
+			fragmentShader: cubeFrag,
+			vertexShader: cubeVert,
+		});
 
 		this.defaultGreenMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x1ECA9A) })
 
@@ -58,10 +83,13 @@ export default class Materials {
 				uColor: { value: new THREE.Color(0x1ECA9A) },
 				uColor2: { value: new THREE.Color(0x000000) },
 				uAlpha: { value: 0},
-				uSound: { value: 0},
-				uSound2: { value: 0},
-				uSound3: { value: 0},
-				uSound4: { value: 0},
+				uSound: { value: 0 },
+				uSound2: { value: 0 },
+				uSound3: { value: 0 },
+				uSound4: { value: 0 },
+				uSound5: { value: 0 },
+				uHeight: { value: 0},
+				uSoundNumber: { value: 0 },
 				uLineNumberY: { value: 40},
 				uLineStrength: { value: 0.23}
 			},
@@ -82,29 +110,77 @@ export default class Materials {
 		})
 
 
-		this.defaultMaterial = new THREE.MeshPhongMaterial({
-			color: 0x010101,
-			shininess: 0,
-			emissive: new THREE.Color("hsl(0, 0%, 30%)"),
-			transparent: true,
-			side: THREE.DoubleSide,
+		this.defaultMaterial = new THREE.MeshStandardMaterial({
+			color: new THREE.Color(0x182b989a),
+			emissive: new THREE.Color(0x0909090)
+			// transparent: true,
+			// roughness: 0.1,
+			// wireframe: true
 			// emissive: 0xfff,
 		})
 
 		this.solMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x2B2B2B), roughness: 1})
 
-		/*
-		new MeshReflectorMaterial(this.webgl.renderer.instance, this.webgl.camera.instance, this.webgl.scene.instance, {
-			resolution: 1024,
-			blur: [512, 128],
-			mixBlur: 2.5,
-			mixContrast: 1.5,
-			mirror: 1
-		});
 
-		*/
+		this.webgl.emitter.on("song_end", (audio_number)=> {
+			//console.log("intro end")
+	  
+			this.screenMaterial.uniforms.uSoundNumber = audio_number
+	  
+			if(audio_number === 1) {
+			  this.changeMaterial()
+			}
+	  
+			
+		})
+
+	}
+
+	createVideo() {
+		this.video = document.createElement('video')
+		this.video2 = document.createElement('video')
+		
+
+		this.video.src = '/1.mp4'
+		this.video2.src = '/2.mp4'
+		// video.autoplay = true
 
 
+		this.video.loop = true
+		this.video.muted = true
+		this.video2.loop = true
+		this.video2.muted = true
+
+		// document.body.appendChild(video)
+		this.texture = new THREE.VideoTexture(this.video);
+		this.texture.minFilter = THREE.LinearFilter;
+		this.texture.magFilter = THREE.LinearFilter;
+		this.texture.format = THREE.RGBAFormat;
+		
+		this.texture2 = new THREE.VideoTexture(this.video2)
+		this.texture2.minFilter = THREE.LinearFilter;
+		this.texture2.magFilter = THREE.LinearFilter;
+		this.texture2.format = THREE.RGBAFormat
+	}
+
+	changeMaterial() {
+		this.webgl.scene.instance.traverse(child => {
+			if(/cube-face/ig.test(child.name)) {
+				child.material = this.screenMaterial
+			}
+
+			if(/screen/ig.test(child.name)) {
+				child.material = this.screenMaterial
+			}
+
+
+		})
+		
+	}
+
+	playVideos() {
+		this.video.play()
+		this.video2.play()
 	}
 
 	tweak() {
@@ -185,16 +261,13 @@ export default class Materials {
 		if(this.webgl.audio_started) {
 			this.screenMaterial.uniforms.uSound.value = this.webgl.audio_manager.values[0]
 			this.screenMaterial.uniforms.uSound2.value = this.webgl.audio_manager.values[1]
-			this.screenMaterial.uniforms.uSound3.value = this.webgl.audio_manager.values[2]
-			this.screenMaterial.uniforms.uSound4.value = this.webgl.audio_manager.values[3]
+			this.screenMaterial.uniforms.uSound3.value  = this.webgl.audio_manager.values[2]
+			this.screenMaterial.uniforms.uSound4.value  = this.webgl.audio_manager.values[3]
+			this.screenMaterial.uniforms.uSound5.value  = this.webgl.audio_manager.values[4]
+			this.screenMaterial.uniforms.uHeight.value = this.webgl.audio_manager.volume
 		}
 		
-
-		//const cableShader = this.cableMaterial.userData.shader;
-
-		//if (cableShader) {
-		//	cableShader.uniforms.uTime.value = time;
-		//}
+		
 		this.cableMaterial.uniforms.uTime.value = time;
 		this.screenMaterial.uniforms.uTime.value = time;
 		this.trinityMaterial.uniforms.uTime.value = time * 0.7;

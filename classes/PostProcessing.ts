@@ -21,7 +21,7 @@ export default class PostProcess {
         this.composer = new EffectComposer(this.renderer)    
         this.params = {
             blendFunction: BlendFunction.ADD,
-            blendFunctionNoise: BlendFunction.COLOR_BURN, // substract
+            blendFunctionNoise: BlendFunction.MULTIPLY, // substract // MULTIPLY // Overlay
 			mipmapBlur: true,
 			luminanceThreshold: 0.5,
 			luminanceSmoothing: 0.1,
@@ -49,9 +49,9 @@ export default class PostProcess {
         const smaa = new SMAAEffect()
 
 		this.effect.inverted = true;
-		const effectPass = new EffectPass(this.camera, this.effect);
-		this.composer.addPass(effectPass);
-        this.composer.addPass(new EffectPass(this.camera, smaa, this.effect, noise ));
+		//const effectPass = new EffectPass(this.camera, this.effect);
+		//this.composer.addPass(effectPass);
+        this.composer.addPass(new EffectPass(this.camera, smaa,this.effect, noise ));
         
     }
 
@@ -83,11 +83,11 @@ export default class PostProcess {
     events() {
       
         this.webgl.emitter.on('beat_sent', ()=> {
-            this.effect.intensity += 0.4
+            this.effect.intensity += 1
 
             setTimeout(() => {
-                this.effect.intensity -= 0.4
-            }, 200);
+                 this.effect.intensity -= 1
+            }, 500);
         })
     }
 

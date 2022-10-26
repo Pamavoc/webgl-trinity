@@ -42,8 +42,12 @@ export default class Loader {
             if (child.isMesh) {
               child.geometry.computeVertexNormals();
 
-              if (/screen/ig.test(child.name) || child.name === 'face-left' || child.name === 'face-right') {
-                child.material = this.webgl.materials.screenMaterial
+              if (/screen/ig.test(child.name)) {
+                child.material = this.webgl.materials.cubeMaterial2
+              }
+
+              else if(/cube-face/ig.test(child.name)) {
+                child.material = this.webgl.materials.cubeMaterial
               }
 
               else if(/light-face/ig.test(child.name)) {
@@ -63,6 +67,10 @@ export default class Loader {
 
               else if (child.name === 'macbook-apple') {
                 child.material = this.webgl.materials.defaultGreenMaterial
+              }
+
+              else if(/back/ig.test(child.name)) {
+                child.material = this.webgl.materials.solMaterial
               }
 
               else {
