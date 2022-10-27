@@ -138,6 +138,12 @@ export default class Materials {
 			if(this.audio_number === 1) {
 				this.changeMaterial()
 			}
+
+			if(this.audio_number === 2) {
+				this.screenMaterial.uniforms.uColor.value = new THREE.Color("rgb(255, 195, 139)")
+			}
+
+
 			this.cableMaterial.uniforms.uSoundNumber.value = audio_number
 			this.screenMaterial.uniforms.uSoundNumber.value = audio_number
 			this.trinityMaterial.uniforms.uSoundNumber.value = audio_number
