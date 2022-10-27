@@ -7,6 +7,7 @@ import Loader from '@/classes/Loader';
 import Scene from '@/classes/Scene';
 import Materials from '@/classes/Materials';
 import useAudio from '@/composables/useAudio';
+import useAnimations from '@/composables/useAnimations';
 
 export default class WebGL {
   scene: THREE.Scene;
@@ -35,6 +36,7 @@ export default class WebGL {
     // ARGS
     this.emitter = emitter;
  
+
     
     // VARS
     this.width = window.innerWidth;
@@ -61,26 +63,30 @@ export default class WebGL {
     this.setEvents();
     this.loadMap('trinity-2.glb')
 
+    this.animations = useAnimations()
 
-    this.emitter.on('audio_started', (e) => {
+
+    this.emitter.on('audio_started', () => {
+
+      // trigger anim webgl
+      this.animations.start(this.camera.instance)
+
 
       this.materials.playVideos()
-
-      console.log("STARTED AUDIO")
       this.audio_manager = useAudio(this.emitter)
      
       this.audio_manager.start( {
            onBeat: ()=> {
           
-            this.emitter.emit('beat_sent')
-
             const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
             console.log(this.audio_manager.volume)
             console.log(average)
 
+            this.emitter.emit('beat_sent', average)
+
            }, 
            live: false,
-           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron.mp3', '/sounds/hillz.mp3']
+           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-s.mp3', '/sounds/burningman-s.mp3']
       })    
 
   
@@ -89,19 +95,16 @@ export default class WebGL {
       
     })
 
+    if (/debug/.test(window.location.href)) {
+      this.debug = true
+      this.camera.tweak()
+      this.scene.postProcess.tweak()
+      this.materials.tweak()
+    }
+
+
   }
 
-  
-  onBeat() {
-    
-  
-    console.log( this.audio_manager)
-    if(this.audio_started) {
-      // const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
-      
-    }
-   
-  }
 
 
   switchMap = (map) => {
@@ -161,6 +164,7 @@ export default class WebGL {
     // Raycaster
     //this.raycast.raycastHover()
 
+    // console.log(this.camera.instance.rotation)
 
     // Audio data
     if(this.audio_started === true) {

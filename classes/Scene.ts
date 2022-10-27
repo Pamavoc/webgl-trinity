@@ -36,7 +36,7 @@ export default class Scene {
     this.camera = webgl.camera.instance;
     this.webgl = webgl;
 
-     this.smoke = new Smoke({ webgl: this.webgl, scene: this })
+    //  this.smoke = new Smoke({ webgl: this.webgl, scene: this })
 
     this.clock = new THREE.Clock();
     this.postProcess = new PostProcess({ scene: this })
@@ -108,7 +108,7 @@ export default class Scene {
 
     // console.log(this.camera.position)
 
-    this.smoke.update()
+    // this.smoke.update()
 
     this.instance.fog.near = camera_h + 4;
     this.instance.fog.far = camera_h * 0.6 + 24;

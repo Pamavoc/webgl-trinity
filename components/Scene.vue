@@ -35,18 +35,23 @@ export default defineComponent({
 });
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   
-.container-canvas
-  position: fixed
-  top: 0
-  left: 0
-  height: 100vh
-  width: 100vw
+body {
+  background: #000000;
+}
+.container-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000000;
   
-
-  canvas
-    height: 100%
-    width: 100%
-    // opacity: 0.03
+  canvas {
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+  }
+ }
 </style>

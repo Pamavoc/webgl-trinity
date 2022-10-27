@@ -65,7 +65,7 @@ class AudioManager {
 
 	}
 
-	start({ onLoad = null, onBeat = null, live = true, analyze = true, debug = false, playlist = ['/sounds/initialisation.mp3', '/sounds/megatron.mp3'], shutup = false, src = null } = {}) {
+	start({ onLoad = null, onBeat = null, live = true, analyze = true, debug = false, playlist = ['/sounds/initialisation.mp3', '/sounds/megatron-s.mp3', '/sounds/burningman-s.mp3'], shutup = false, src = null } = {}) {
 
 		console.log(onBeat)
 		this.debug = debug
@@ -112,18 +112,19 @@ class AudioManager {
 			this.currentPlay = 0
 		}
 
+		if(this.playlist[this.currentPlay - 1] === "/sounds/initialisation.mp3") {
+			
+			this.emitter.emit("song_start", 0)
+
+		} else if(this.playlist[this.currentPlay - 1] === "/sounds/megatron-s.mp3") {
+			
 		
-		if(this.playlist[this.currentPlay - 1] === "/sounds/megatron.mp3") {
-			// todo emit a chaque fin de son
-			console.log(this.playlist[this.currentPlay - 1])
+			this.emitter.emit("song_start", 1)
 
-			this.emitter.emit("song_end", 1)
+		} else if(this.playlist[this.currentPlay - 1] === "/sounds/burningman-s.mp3") {
 
-		} else if(this.playlist[this.currentPlay - 1] === "/sounds/hillz.mp3") {
-
-			console.log(this.playlist[this.currentPlay - 1])
-
-			this.emitter.emit("song_end", 2)
+			console.log("BURNINGMAN")
+			this.emitter.emit("song_start", 2)
 			
 		}
 
@@ -162,7 +163,9 @@ class AudioManager {
 			this.canvas.width = this.audioRange * W_BAR + (this.audioRange - 1) * SPACE_BAR + MARGIN * 2
 			this.canvas.height = H_CANVAS + MARGIN*2 + H_BEAT_BAR + H_INFO_BAR
 			this.ctx = this.canvas.getContext("2d")
+			this.canvas.classList.add('canvas-viz')
 			this.canvas.style.position = "absolute"
+			this.canvas.style.display = "none"
 			this.canvas.style.zIndex = 9999
 			this.canvas.style.top = 0
 			this.canvas.style.left = 0

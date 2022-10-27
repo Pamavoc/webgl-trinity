@@ -30,42 +30,26 @@ export default class Materials {
 	texture2: any
 	video: any
 	video2: any
-	
+	audio_number: number
+
 	constructor(args) {
 
 		this.webgl = args.webgl
+		this.audio_number = -1;
 
 		this.createVideo()
 		this.create()
-		this.tweak()
-
+		
 		this.webgl.scene.changeFog('black')
     	this.changeDefault('black')
     
 	}
 
 	create() {
-		this.cableMaterial = new THREE.RawShaderMaterial( {
-			uniforms: {
-				uTime: { value: 0 },
-				uColor: { value: new THREE.Color(0xFFFFFF) },
-				uColor2: { value: new THREE.Color(0x1ECA9A) },
-				uAlpha: { value: 0 },
-				
-			},
-			fragmentShader: cableFrag,
-			vertexShader: cableVert,
-		} );
+		
 
-		this.cubeMaterial = new THREE.RawShaderMaterial( {
-			uniforms: {
-				uTime: { value: 0 },
-				texture: { type: "t", value: this.texture},
-			},
-			fragmentShader: cubeFrag,
-			vertexShader: cubeVert,
-		} );
 
+		// video
 		this.cubeMaterial2 = new THREE.RawShaderMaterial( {
 			uniforms: {
 				uTime: { value: 0 },
@@ -74,6 +58,17 @@ export default class Materials {
 			fragmentShader: cubeFrag,
 			vertexShader: cubeVert,
 		});
+
+		// normal
+		this.cubeMaterial = new THREE.RawShaderMaterial( {
+			uniforms: {
+				uTime: { value: 0 },
+				uSoundNumber: { value: 0 },
+				texture: { type: "t", value: this.texture},
+			},
+			fragmentShader: cubeFrag,
+			vertexShader: cubeVert,
+		} );
 
 		this.defaultGreenMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x1ECA9A) })
 
@@ -89,48 +84,63 @@ export default class Materials {
 				uSound4: { value: 0 },
 				uSound5: { value: 0 },
 				uHeight: { value: 0},
-				uSoundNumber: { value: 0 },
-				uLineNumberY: { value: 40},
-				uLineStrength: { value: 0.23}
+				uSoundNumber: { value: this.audio_number },
+				uLineNumberY: { value: 84.93 },
+				uLineStrength: { value: 0.11 },
+				uAverage: { value:0}
 			},
 			fragmentShader: screenFrag,
 			vertexShader: screenVert,
+		} );
+
+		this.cableMaterial = new THREE.RawShaderMaterial( {
+			uniforms: {
+				uTime: { value: 0 },
+				uColor: { value: new THREE.Color(0xFFFFFF) },
+				uColor2: { value: new THREE.Color(0x1ECA9A) },
+				uColor3: { value: new THREE.Color(0x08BE61) },
+				uAlpha: { value: 0 },
+				uHeight: { value: 0 },
+				uSoundNumber: { value: this.audio_number },
+				uAverage: { value: 0 }
+			},
+			fragmentShader: cableFrag,
+			vertexShader: cableVert,
 		} );
 
 		this.trinityMaterial = new THREE.RawShaderMaterial({
 			uniforms: {
 				uTime: { value: 0 },
 				uColor: { value: new THREE.Color(0x1ECA9A) },
-				uAlpha: { value: 1}
+				uAlpha: { value: 1},
+				uSoundNumber: { value: this.audio_number },
 			},
 			fragmentShader: trinityFrag,
 			vertexShader: trinityVert,
 			
-			//transparent: true
 		})
 
 
 		this.defaultMaterial = new THREE.MeshStandardMaterial({
 			color: new THREE.Color(0x182b989a),
-			emissive: new THREE.Color(0x0909090)
-			// transparent: true,
-			// roughness: 0.1,
-			// wireframe: true
-			// emissive: 0xfff,
+			emissive: new THREE.Color(0x0909090),
 		})
 
 		this.solMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x2B2B2B), roughness: 1})
 
 
-		this.webgl.emitter.on("song_end", (audio_number)=> {
+		this.webgl.emitter.on("song_start", (audio_number)=> {
+
+			this.audio_number = audio_number
+			console.log(`AUDIO NUMBER : ${audio_number}`)
 			//console.log("intro end")
 	  
-			this.screenMaterial.uniforms.uSoundNumber = audio_number
-	  
-			if(audio_number === 1) {
-			  this.changeMaterial()
+			if(this.audio_number === 1) {
+				this.changeMaterial()
 			}
-	  
+			this.cableMaterial.uniforms.uSoundNumber.value = audio_number
+			this.screenMaterial.uniforms.uSoundNumber.value = audio_number
+			this.trinityMaterial.uniforms.uSoundNumber.value = audio_number
 			
 		})
 
@@ -172,8 +182,6 @@ export default class Materials {
 			if(/screen/ig.test(child.name)) {
 				child.material = this.screenMaterial
 			}
-
-
 		})
 		
 	}
@@ -265,12 +273,17 @@ export default class Materials {
 			this.screenMaterial.uniforms.uSound4.value  = this.webgl.audio_manager.values[3]
 			this.screenMaterial.uniforms.uSound5.value  = this.webgl.audio_manager.values[4]
 			this.screenMaterial.uniforms.uHeight.value = this.webgl.audio_manager.volume
+
 		}
 		
 		
+		if(this.webgl.audio_started && this.audio_number > 0) {
+			this.cableMaterial.uniforms.uHeight.value =  this.webgl.audio_manager.values[4]
+		}
+
 		this.cableMaterial.uniforms.uTime.value = time;
 		this.screenMaterial.uniforms.uTime.value = time;
-		this.trinityMaterial.uniforms.uTime.value = time * 0.7;
+		this.trinityMaterial.uniforms.uTime.value = time;
 
 	}
 

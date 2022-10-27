@@ -2,25 +2,41 @@ precision highp float;
 uniform float uTime;
 uniform vec3 uColor;
 uniform vec3 uColor2;
+uniform vec3 uColor3;
+uniform vec2 uResolution;
+uniform float uSoundNumber;
+uniform float uHeight;
+uniform float uAverage;
+
 varying vec2 vUv;
 varying float vLeng;
-uniform vec2 u_resolution;
+
 
 void main() {
-    vec2 st = gl_FragCoord.xy/u_resolution;
+    
 
-    // Smooth interpolation between 0.1 and 0.9
-    //float y = smoothstep(0.1, 0.9, st.x);
+    // home
+    if(uSoundNumber == -1.) {
+        
+        gl_FragColor = vec4(uColor, 1);
+    } 
 
-    //vec3 color = mod(y * uTime);
+    // intro
+    if(uSoundNumber == 0.) {
+    
+        vec3 color = vec3(mix(uColor3 * uAverage * 1., uColor2 * cos(uTime * 2.), vUv.x));
+        gl_FragColor = vec4(color, 1.);
+        //gl_FragColor  = vec4(color, 1.);
+    } 
 
-    vec3 color = mix(uColor, uColor2 * sin(uTime * 2.), vUv.x);
 
+    // megatron
+    if(uSoundNumber == 1.) {
+        gl_FragColor = vec4(uColor2, uTime);
+    } 
 
-    // vec3 color = mix(uColor, uColor2, smoothstep(uColor, uColor2, vUv.x), vUv.x);
-
-
-    // gradient avec un step
-
-    gl_FragColor = vec4(color, 1.);
+    // hillz
+    if(uSoundNumber == 2.) {
+        gl_FragColor = vec4(uColor2 * sin(uTime), 1.);
+    }
 }
