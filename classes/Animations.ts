@@ -69,7 +69,7 @@ export default class Animations {
 
     if(audio_number === 2) {
       tl.to(camera.position, { x: 6.762, y: 1.2, z: 4.3,  ease: 'power2.inOut', duration: 4})
-      tl.to(camera.position, { x: 12, y: 3.3, z: 0.5,  ease: 'power2.inOut', duration: 12}, 4)
+      tl.to(camera.position, { x: 12, y: 4.3, z: 0.5,  ease: 'power2.inOut', duration: 12}, 4)
       // tl.to(camera.position, { x: 4.6, y: 1.2, z: 0.95,  ease: 'power2.inOut', duration: 4})      
     }
   }

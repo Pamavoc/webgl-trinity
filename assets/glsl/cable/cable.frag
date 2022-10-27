@@ -38,7 +38,8 @@ void main() {
 
     // burningman
     if(uSoundNumber == 2.) {
-        vec3 color = vec3(mix(uColor3 * uAverage * 1., uColor2, vUv.x));
+
+        vec3 color = vec3(mix(uColor, uColor2, vUv.x));
         gl_FragColor = vec4(color, uAlpha);
     }
 }

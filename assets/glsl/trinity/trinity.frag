@@ -17,13 +17,15 @@ void main() {
 
     if(uSoundNumber == 1.) {
      
-        color = uColor * cos(uTime); 
+       // color = uColor * cos(uTime); 
+       color = uColor; 
 
     } 
 
     // 
     if(uSoundNumber == 2.) {
-      color = uColor; 
+        
+        color = uColor; 
  
     }
 
