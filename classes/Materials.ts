@@ -73,11 +73,13 @@ export default class Materials {
 		this.defaultGreenMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x1ECA9A) })
 
 		this.screenMaterial = new THREE.RawShaderMaterial( {
+			
 			uniforms: {
 				uTime: { value: 0 },
-				uColor: { value: new THREE.Color(0x1ECA9A) },
-				uColor2: { value: new THREE.Color(0x000000) },
-				uAlpha: { value: 0},
+				uColor: { value: { r: 30/255, g: 202/255, b:154/255 } },
+				uColor2: { value: { r: 0, g: 0, b: 0} },
+				uColor3: { value: { r: 191/255, g: 157/255, b: 90/255 }},
+				uAlpha: { value:1 },
 				uSound: { value: 0 },
 				uSound2: { value: 0 },
 				uSound3: { value: 0 },
@@ -89,6 +91,7 @@ export default class Materials {
 				uLineStrength: { value: 0.11 },
 				uAverage: { value:0}
 			},
+			transparent: true,
 			fragmentShader: screenFrag,
 			vertexShader: screenVert,
 		} );
@@ -97,8 +100,8 @@ export default class Materials {
 			uniforms: {
 				uTime: { value: 0 },
 				uColor: { value: new THREE.Color(0xFFFFFF) },
-				uColor2: { value: new THREE.Color(0x1ECA9A) },
-				uColor3: { value: new THREE.Color(0x08BE61) },
+				uColor2:{ value: { r: 30/255, g: 202/255, b:154/255 } },
+				uColor3: { value: { r: 8/255, g: 190/255, b:97/255 } },
 				uAlpha: { value: 0 },
 				uHeight: { value: 0 },
 				uSoundNumber: { value: this.audio_number },
@@ -128,6 +131,7 @@ export default class Materials {
 
 		this.solMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x2B2B2B), roughness: 1})
 
+		const target = new THREE.Vector3(0, 1, 0)
 
 		this.webgl.emitter.on("song_start", (audio_number)=> {
 
@@ -135,13 +139,26 @@ export default class Materials {
 			console.log(`AUDIO NUMBER : ${audio_number}`)
 			//console.log("intro end")
 	  
+		
+		
 			if(this.audio_number === 1) {
 				this.changeMaterial()
+				this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
 			}
 
 			if(this.audio_number === 2) {
-				this.screenMaterial.uniforms.uColor.value = new THREE.Color("rgb(255, 195, 139)")
+				this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
+
+				this.screenMaterial.uniforms.uColor.value = {r: 0.99, g: 0.56, b: 0.04}; // {r: 0.95, g: 0.38, b: 0.07}
+				this.screenMaterial.uniforms.uAlpha.value = 0.8
+				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
+
+				this.cableMaterial.uniforms.uColor.value = {r: 191/255, g: 157/255, b: 90/255}
+				this.cableMaterial.uniforms.uColor2.value = {r: 0.95, g: 0.38, b: 0.07} //{r: 0.95, g: 0.38, b: 0.07}
+				this.cableMaterial.uniforms.uAlpha.value = 0.4
 			}
+
+		
 
 
 			this.cableMaterial.uniforms.uSoundNumber.value = audio_number
@@ -221,22 +238,25 @@ export default class Materials {
 		}
 
 		const cable_params = {
-			color1: this.cableMaterial.uniforms.uColor.value.getHex(),
-			color2: this.cableMaterial.uniforms.uColor2.value.getHex(),
-			
+			color1: this.cableMaterial.uniforms.uColor.value,
+			color2: this.cableMaterial.uniforms.uColor2.value,
+			alpha:  this.cableMaterial.uniforms.uAlpha.value,
 			// emissive: this.waterMaterial.emissive.getHex(),
 		}
 
 		const screen_params = {
-			color1: this.screenMaterial.uniforms.uColor.value.getHex(),
-			color2: this.screenMaterial.uniforms.uColor2.value.getHex(),
+			color1: this.screenMaterial.uniforms.uColor.value,
+			alpha: this.screenMaterial.uniforms.uAlpha.value,
+			color2: this.screenMaterial.uniforms.uColor2.value,
 			lineStrength: this.screenMaterial.uniforms.uLineStrength.value,
 			uLineNumberY: this.screenMaterial.uniforms.uLineNumberY.value
 		}
 
 		const color_options = {
 			view: 'color',
-			color: { alpha: true },
+			color: { 
+				alpha: true, type:"float"
+			},
 		}
 
 
@@ -250,16 +270,29 @@ export default class Materials {
 
 
 		cable_page.addInput(cable_params, 'color1', color_options).on('change', () => {
-			this.cableMaterial.uniforms.uColor.value.setHex(cable_params.color1);
+			this.cableMaterial.uniforms.uColor.value = cable_params.color1;
 		});
 
 		cable_page.addInput(cable_params, 'color2', color_options).on('change', () => {
-			this.cableMaterial.uniforms.uColor2.value.setHex(cable_params.color2);
+			this.cableMaterial.uniforms.uColor2.value = cable_params.color2;
 		});
 
-		screen_page.addInput(screen_params, 'color1', color_options).on('change', () => {
-			this.screenMaterial.uniforms.uColor.value.setHex(screen_params.color1);
+		cable_page.addInput(screen_params, 'alpha', {min: 0, max: 1}).on('change', (ev) => {
+			console.log(ev.value)
+			this.cableMaterial.uniforms.uAlpha.value = cable_params.alpha;
 		});
+
+		screen_page.addInput(screen_params, 'color1', color_options).on('change', (ev) => {
+			console.log(ev.value)
+			this.screenMaterial.uniforms.uColor.value = screen_params.color1;
+		});
+
+
+		screen_page.addInput(screen_params, 'alpha', {min: 0, max: 1}).on('change', (ev) => {
+			console.log(ev.value)
+			this.screenMaterial.uniforms.uAlpha.value = screen_params.alpha;
+		});
+		
 
 		screen_page.addInput(screen_params, 'lineStrength', { min: 0, max: 5 }).on('change', (ev) => {
 			this.screenMaterial.uniforms.uLineStrength.value = ev.value

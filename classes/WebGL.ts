@@ -69,7 +69,10 @@ export default class WebGL {
     this.emitter.on('audio_started', () => {
 
       // trigger anim webgl
-      this.animations.start(this.camera.instance)
+      const target = new THREE.Vector3(0, 1, 0)
+      const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
+      console.log(cube)
+      this.animations.start(this.camera.instance, target)
 
 
       this.materials.playVideos()
@@ -81,17 +84,15 @@ export default class WebGL {
             const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
             console.log(this.audio_manager.volume)
             console.log(average)
-
             this.emitter.emit('beat_sent', average)
-
            }, 
            live: false,
-           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-s.mp3', '/sounds/burningman-s.mp3']
+           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-ss.mp3', '/sounds/burningman-s.mp3']
       })    
 
   
       this.audio_started = true
-
+      // window.audio = this.audio_manager
       
     })
 

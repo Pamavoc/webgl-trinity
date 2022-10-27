@@ -2,34 +2,32 @@ precision highp float;
 uniform float uTime;
 uniform vec3 uColor;
 uniform float uAlpha;
+varying vec3 vColor;
+
 uniform float uSoundNumber;
-uniform float uAverage;
+uniform float uSpeed;
 
 vec3 color;
 
 void main() {
-    // vec3 color = uColor * cos(uTime * 3.); 
-
-    // home
-    if(uSoundNumber == -1.) {
-      color = uColor;
-    }
-
-    // initialisation
+  
     if(uSoundNumber == 0.) {
-      color = uColor;  
-    }
+       color = uColor;  
+    } 
 
-    // megatron
     if(uSoundNumber == 1.) {
-       color = sin(uColor); 
-    }
+     
+        color = uColor * cos(uTime); 
 
-    // burning
+    } 
+
+    // 
     if(uSoundNumber == 2.) {
-        color = sin(uColor); 
+      color = uColor; 
+ 
     }
 
-   
+
+
     gl_FragColor = vec4(color, uAlpha);
 }

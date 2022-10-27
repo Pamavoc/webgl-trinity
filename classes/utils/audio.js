@@ -78,8 +78,9 @@ class AudioManager {
 			if (!shutup) {
 				this.masterGain.connect(this.context.destination)
 			}
-			document.body.addEventListener( 'click', this.playNext, false )
-			setTimeout( this.playNext, 100 )
+			//document.body.addEventListener( 'click', this.playNext, false )
+			//setTimeout( this.playNext, 100 )
+			this.playNext()
 			if (onLoad) {
 				onLoad()
 			}
@@ -112,16 +113,18 @@ class AudioManager {
 			this.currentPlay = 0
 		}
 
-		if(this.playlist[this.currentPlay - 1] === "/sounds/initialisation.mp3") {
+		console.log( this.currentPlay, this.playlist, this.playlist.length)
+
+		if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3") {
 			
 			this.emitter.emit("song_start", 0)
 
-		} else if(this.playlist[this.currentPlay - 1] === "/sounds/megatron-s.mp3") {
+		} else if(this.playlist[this.currentPlay] === "/sounds/megatron-ss.mp3") {
 			
 		
 			this.emitter.emit("song_start", 1)
 
-		} else if(this.playlist[this.currentPlay - 1] === "/sounds/burningman-s.mp3") {
+		} else if(this.playlist[this.currentPlay] === "/sounds/burningman-s.mp3") {
 
 			console.log("BURNINGMAN")
 			this.emitter.emit("song_start", 2)
@@ -129,7 +132,8 @@ class AudioManager {
 		}
 
 
-		this._src = this.playlist[this.currentPlay - 1 ];
+		this._src = this.playlist[this.currentPlay ];
+		console.log(this._src)
 
 		
 

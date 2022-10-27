@@ -36,6 +36,8 @@ void main()
         // float strength = mod(uSound3 * vUv.x * uLineNumberY, 1.0);
         // strength = step(uLineStrength, strength);
         // color = mix(uColor, uColor2, strength);
+        gl_FragColor = vec4(color, uAlpha);
+
     } 
 
     // hillz
@@ -43,8 +45,9 @@ void main()
 
         
         color = uHeight * uColor;
+        gl_FragColor = vec4(color, uAlpha);
+
     }
 
-     gl_FragColor = vec4(color, 1.);
-
+   
 }
