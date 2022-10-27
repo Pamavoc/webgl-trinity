@@ -34,7 +34,7 @@ function startAudio() {
 
 <style lang="scss">
 
-@import url('http://fonts.cdnfonts.com/css/matrix');
+//@import url('http://fonts.cdnfonts.com/css/matrix');
 
 .hide {
     display: none;
