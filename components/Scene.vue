@@ -49,7 +49,8 @@ body {
   background: #000000;
   
   canvas {
-    opacity: 0;
+   // opacity: 0;
+    opacity: 1;
     height: 100%;
     width: 100%;
   }

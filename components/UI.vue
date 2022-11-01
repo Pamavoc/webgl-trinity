@@ -44,9 +44,9 @@ function startAudio() {
     font-family: 'Matrix Code NFI', sans-serif;
     position: fixed;
     top: 50px;
-    z-index: 99999;
-    width: 100vw;
-    height: 100vh;
+   // z-index: 99999;
+    //width: 100vw;
+    //height: 100vh;
 
     .credit {
 

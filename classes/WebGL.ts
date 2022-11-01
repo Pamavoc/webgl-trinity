@@ -8,6 +8,7 @@ import Scene from '@/classes/Scene';
 import Materials from '@/classes/Materials';
 import useAudio from '@/composables/useAudio';
 import useAnimations from '@/composables/useAnimations';
+import Animations from '@/classes/Animations';
 
 export default class WebGL {
   scene: THREE.Scene;
@@ -25,6 +26,7 @@ export default class WebGL {
   params: ObjectType;
 
 
+
   raycast: Raycaster;
   emitter: any;
 
@@ -33,11 +35,10 @@ export default class WebGL {
  
 
   constructor({ emitter }) {
+    
     // ARGS
     this.emitter = emitter;
  
-
-    
     // VARS
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -51,6 +52,9 @@ export default class WebGL {
     this.renderer = new Renderer(this.width, this.height);
     this.scene = new Scene(this);
 
+    this.animations = new Animations(this)
+
+
     this.raycast = new Raycaster(
       this.scene.instance,
       this.camera.instance,
@@ -63,19 +67,24 @@ export default class WebGL {
     this.setEvents();
     this.loadMap('trinity-2.glb')
 
-    this.animations = useAnimations()
 
 
     this.emitter.on('audio_started', () => {
 
       // trigger anim webgl
       const target = new THREE.Vector3(0, 1, 0)
-      const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
-      console.log(cube)
-      this.animations.start(this.camera.instance, target)
+      // const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
+      // console.log(cube)
+
+      this.animations.createIntroduction()
+      
+      // this.animations.start(this.camera.instance, target)
+    
 
 
       this.materials.playVideos()
+    
+      /*
       this.audio_manager = useAudio(this.emitter)
      
       this.audio_manager.start( {
@@ -91,7 +100,7 @@ export default class WebGL {
       })    
 
   
-      this.audio_started = true
+      this.audio_started = true */
       // window.audio = this.audio_manager
       
     })

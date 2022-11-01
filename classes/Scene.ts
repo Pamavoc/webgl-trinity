@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import Controls from './Controls';
+import Controls from '@/classes/Controls';
 import PostProcess from '@/classes/PostProcessing';
-import Smoke from '@/classes/Smoke';
+import TransitionCamera from '@/classes/managers/TransitionCamera';
 
 export default class Scene {
   renderer: any;
@@ -19,7 +19,7 @@ export default class Scene {
   lights: any
   postProcess: any
   clock: any
-  smoke: any
+  transition: any
 
   constructor(webgl) {
 
@@ -36,13 +36,12 @@ export default class Scene {
     this.camera = webgl.camera.instance;
     this.webgl = webgl;
 
-    //  this.smoke = new Smoke({ webgl: this.webgl, scene: this })
-
     this.clock = new THREE.Clock();
     this.postProcess = new PostProcess({ scene: this })
  
     this.createFog();
     this.controls = new Controls(this.camera, this.renderer);
+    this.transition = new TransitionCamera({ webgl: this.webgl, scene: this })
     console.log(this.controls)
   
     // this.changeFog('green')
@@ -105,15 +104,12 @@ export default class Scene {
 
     const camera_h = this.camera.position.y * 0.8;
     // console.log(camera_h)
-
     // console.log(this.camera.position)
-
-    // this.smoke.update()
-
     this.instance.fog.near = camera_h + 4;
     this.instance.fog.far = camera_h * 0.6 + 24;
 
     this.webgl.materials.update(elapsedTime);
+    this.transition.update()
 
    // console.log(this.camera.position.x, this.camera.position.y, this.camera.position.z)
     // this.controls.update();
