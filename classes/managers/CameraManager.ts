@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 import useDebug from "@/composables/useDebug";
-import { lerp } from "three/src/math/MathUtils";
 
-export default class Cameras {
+export default class CameraManager {
 	webgl:any
 	scene:any
 	cameras: any
@@ -15,15 +14,14 @@ export default class Cameras {
 
 	setCam(camera) {
 
-		if(this.currentCamera) this.scene.remove(this.currentCamera.instance)
+		if(this.currentCamera) this.scene.instance.remove(this.currentCamera.instance)
 
 		this.currentCamera = camera
-		this.scene.add(this.currentCamera.instance)
+		this.scene.instance.add(this.currentCamera.instance)
     }
 
 	resize() {
 		this.currentCamera.resize(this.currentCamera);
-		// this.mainCamera.resize();
 	}
 
 

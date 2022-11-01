@@ -9,7 +9,6 @@ export default class Raycaster {
     raycaster: THREE.Raycaster
     mouse: THREE.Vector2
     objects: any
-    anims: Animations
     currentIntersect: any
 
     constructor(scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer) {
@@ -17,7 +16,7 @@ export default class Raycaster {
         this.scene = scene
         this.renderer = renderer
         this.camera = camera
-        this.anims = new Animations()
+       
 
 
         this.mouse = new THREE.Vector2()

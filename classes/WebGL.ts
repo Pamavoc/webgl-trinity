@@ -8,9 +8,11 @@ import Scene from '@/classes/Scene';
 import Materials from '@/classes/Materials';
 import useAudio from '@/composables/useAudio';
 import useAnimations from '@/composables/useAnimations';
-import Animations from '@/classes/Animations';
+import CameraManager from '@/classes/managers/CameraManager'
+
 
 export default class WebGL {
+  cameraManager: CameraManager
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   renderer: Renderer;
@@ -24,7 +26,6 @@ export default class WebGL {
   height: number;
   debug: boolean;
   params: ObjectType;
-
 
 
   raycast: Raycaster;
@@ -52,7 +53,10 @@ export default class WebGL {
     this.renderer = new Renderer(this.width, this.height);
     this.scene = new Scene(this);
 
-    this.animations = new Animations(this)
+
+    // MANAGERS
+    this.cameraManager = new CameraManager({ webgl: this})
+    this.animations = useAnimations()
 
 
     this.raycast = new Raycaster(
@@ -76,7 +80,7 @@ export default class WebGL {
       // const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
       // console.log(cube)
 
-      this.animations.createIntroduction()
+      this.animations.createIntroduction(this.camera)
       
       // this.animations.start(this.camera.instance, target)
     

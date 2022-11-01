@@ -1,20 +1,14 @@
 import { getProject, types as t } from '@theatre/core'
 import { ObjectType } from '@/classes/interfaces/ObjectType';
-
-//import studio from '@theatre/studio';
 import gsap from 'gsap'
 
 
 export default class Animations {
 
-  webgl: any
   vector3D: any
   
-  constructor(webgl) {
-
-    this.webgl = webgl
-
-    
+  constructor() {
+  
     const nudgableNumber = (defaultValue) => t.number(defaultValue, { nudgeMultiplier: 0.01 });
 
     this.vector3D = {
@@ -26,7 +20,7 @@ export default class Animations {
     if(window.location.pathname === "/studio") {
 
       import('@theatre/studio').then(studio => {
-        studio.default.initialize() //.initialize()  
+        studio.default.initialize() 
       });
      
       
@@ -119,11 +113,11 @@ export default class Animations {
     return sheet;
   }
 
-  createIntroduction() {
+  createIntroduction(camera) {
     const project = this.createProject('Introduction')
     const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
      
-    this.createTheatreObject(sheet, "camera", this.webgl.camera.instance, {
+    this.createTheatreObject(sheet, "camera", camera.instance, {
 
         transforms: {
           position: this.vector3D,
