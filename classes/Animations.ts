@@ -2,11 +2,13 @@ import { getProject, types as t } from '@theatre/core'
 import { ObjectType } from '@/classes/interfaces/ObjectType';
 import gsap from 'gsap'
 import introductionState from '@/assets/states-animations/Introduction.theatre-project-state.json'
+import studio from "@theatre/studio"
 
 export default class Animations {
 
   vector3D: any
-  
+  cameraParams: any
+
   constructor() {
   
     const nudgableNumber = (defaultValue) => t.number(defaultValue, { nudgeMultiplier: 0.01 });
@@ -17,11 +19,27 @@ export default class Animations {
       z: nudgableNumber(0)
     };
 
-    if(window.location.pathname === "/studio") {
+    this.cameraParams = {
+      transforms: {
+        position: this.vector3D,
+        rotation: this.vector3D,
+      },
+      zoom: 1,
+      fov: 50,
+      target: {
+        position: { x: 0, y: 2, z: 1 },
+      },
+    };
 
-      import('@theatre/studio').then(studio => {
-        studio.default.initialize() 
-      });
+    studio.initialize()
+    studio.ui.restore()
+
+    if(window.location.pathname === "/studio") {
+     // studio.initialize()
+
+      // import('@theatre/studio').then(studio => {
+      //   studio.default.initialize() 
+      // });
      
       
     }
@@ -72,11 +90,13 @@ export default class Animations {
 
   cameraMoveSong(audio_number, camera, target) {
 
-    const tl = gsap.timeline({ 
-      onUpdate: ()=> {
-       camera.lookAt(target)
-    } 
-   })
+
+
+  //   const tl = gsap.timeline({ 
+  //     onUpdate: ()=> {
+  //      camera.lookAt(target)
+  //   } 
+  //  })
    
     if(audio_number === 1) {
       
@@ -112,35 +132,31 @@ export default class Animations {
     
   }
 
-  createSheet(project, sheet_name, audio) {
+  createSheet(project, sheet_name, audio?) {
     // Create a sheet
     const sheet = project.sheet(sheet_name);
 
     if(audio) {
-      this.attachAudio(sheet, audio)
+      this.attachAudio(sheet, audio)                                    
     }
     return sheet;
   }
 
   createIntroduction(camera) {
     const project = this.createProject('Introduction', { introductionState })
-    const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
+    // const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
+    const sheet = this.createSheet(project, 'Camera Animation')
      
-    this.createTheatreObject(sheet, "camera", camera.instance, {
-
-        transforms: {
-          position: this.vector3D,
-          rotation: this.vector3D
-        },
-       
-        zoom: 1,
-        fov: 50,
-        target: {
-          position: {x: 0, y: 2, z: 1},
-        }
-    })
-
+    this.createTheatreObject(sheet, "camera", camera.instance, this.cameraParams)
     this.playAnimations(project, sheet, 1)
+  }
+
+  createSongSequence(camera, audio_number) {
+    const project = this.createProject('Song-sequence')
+    const sheet = this.createSheet(project, `Song animation`)
+    this.createTheatreObject(sheet, `Song-sequence-${audio_number}`, camera.instance, this.cameraParams)
+
+
   }
 
   createTheatreObject(sheet, object_name, mesh, object_properties) {

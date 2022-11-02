@@ -174,12 +174,15 @@ export default class Materials {
 			}
 		
 			if(this.audio_number === 1) {
+				this.webgl.animations.createSongSequence(this.webgl.camera, audio_number)
 				this.changeMaterial()
-				this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
+				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
+				this.webgl.animations.cam
 			}
 
 			if(this.audio_number === 2) {
-				this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
+				
+				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
 
 				this.screenMaterial.uniforms.uColor.value = {r: 0.99, g: 0.56, b: 0.04}; // {r: 0.95, g: 0.38, b: 0.07}
 				this.screenMaterial.uniforms.uAlpha.value = 0.8

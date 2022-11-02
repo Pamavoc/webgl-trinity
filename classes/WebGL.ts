@@ -76,7 +76,7 @@ export default class WebGL {
     this.emitter.on('audio_started', () => {
 
       // trigger anim webgl
-      const target = new THREE.Vector3(0, 1, 0)
+      // const target = new THREE.Vector3(0, 1, 0)
       // const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
       // console.log(cube)
 
@@ -88,7 +88,7 @@ export default class WebGL {
 
       this.materials.playVideos()
     
-      /*
+      
       this.audio_manager = useAudio(this.emitter)
      
       this.audio_manager.start( {
@@ -104,7 +104,7 @@ export default class WebGL {
       })    
 
   
-      this.audio_started = true */
+      this.audio_started = true 
       // window.audio = this.audio_manager
       
     })
