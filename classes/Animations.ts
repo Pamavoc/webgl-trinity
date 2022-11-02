@@ -1,7 +1,7 @@
 import { getProject, types as t } from '@theatre/core'
 import { ObjectType } from '@/classes/interfaces/ObjectType';
 import gsap from 'gsap'
-
+import introductionState from '@/assets/states-animations/Introduction.theatre-project-state.json'
 
 export default class Animations {
 
@@ -97,10 +97,19 @@ export default class Animations {
 
   
 
-  createProject(project_name) {
+  createProject(project_name, project_state?: ObjectType) {
    // Create a project for the animation
-    const project = getProject(project_name);
+    let project;
+
+    if(project_state) {
+      project = getProject(project_name, project_state);
+    } else {
+      project = getProject(project_name);
+     
+    }
+
     return project;
+    
   }
 
   createSheet(project, sheet_name, audio) {
@@ -114,7 +123,7 @@ export default class Animations {
   }
 
   createIntroduction(camera) {
-    const project = this.createProject('Introduction')
+    const project = this.createProject('Introduction', { introductionState })
     const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
      
     this.createTheatreObject(sheet, "camera", camera.instance, {
@@ -123,11 +132,15 @@ export default class Animations {
           position: this.vector3D,
           rotation: this.vector3D
         },
-        
+       
+        zoom: 1,
+        fov: 50,
         target: {
           position: {x: 0, y: 2, z: 1},
         }
-      })
+    })
+
+    this.playAnimations(project, sheet, 1)
   }
 
   createTheatreObject(sheet, object_name, mesh, object_properties) {
@@ -149,10 +162,16 @@ export default class Animations {
       }
 
       if(object_name === "camera")  {
+
+        mesh.fov = values.fov
+        mesh.zoom = values.zoom
+
         for (const [transform, value] of Object.entries(values.target)) {
            //@ts-ignore
           mesh.lookAt(value.x, value.y, value.z);
         }  
+
+        mesh.updateProjectionMatrix();
       }
     })
   }

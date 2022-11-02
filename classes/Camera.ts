@@ -39,7 +39,9 @@ export default class Camera {
 
     camera_page.addInput(this.instance, 'position')
     camera_page.addInput(this.instance, 'rotation')
-
+    camera_page.addInput(this.instance, 'zoom')
+    camera_page.addInput(this.instance, 'fov')
+  
   }
 
 
