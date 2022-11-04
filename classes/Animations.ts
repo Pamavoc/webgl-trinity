@@ -151,13 +151,6 @@ export default class Animations {
     this.playAnimations(project, sheet, 1)
   }
 
-  createSongSequence(camera, audio_number) {
-    const project = this.createProject('Song-sequence')
-    const sheet = this.createSheet(project, `Song animation`)
-    this.createTheatreObject(sheet, `Song-sequence-${audio_number}`, camera.instance, this.cameraParams)
-
-
-  }
 
   createTheatreObject(sheet, object_name, mesh, object_properties) {
 

@@ -121,6 +121,3 @@ void main()	{
 
 	//vNoise = uSound3 * uTime * uSound4;
 }
-
-
-

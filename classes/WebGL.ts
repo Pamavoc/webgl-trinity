@@ -35,7 +35,7 @@ export default class WebGL {
   audio_manager: any;
  
 
-  constructor({ emitter }) {
+  constructor({ emitter }: any) {
     
     // ARGS
     this.emitter = emitter;

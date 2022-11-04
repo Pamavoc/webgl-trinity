@@ -12,11 +12,8 @@ import screenVert from '@/assets/glsl/screen/screen.vert';
 import trinityFrag from '@/assets/glsl/trinity/trinity.frag';
 import trinityVert from '@/assets/glsl/trinity/trinity.vert';
 
-
-
 import cubeFrag from '@/assets/glsl/cube/cube.frag';
 import cubeVert from '@/assets/glsl/cube/cube.vert';
-
 
 
 export default class Materials {
@@ -174,10 +171,10 @@ export default class Materials {
 			}
 		
 			if(this.audio_number === 1) {
-				this.webgl.animations.createSongSequence(this.webgl.camera, audio_number)
+				
 				this.changeMaterial()
 				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
-				this.webgl.animations.cam
+				// this.webgl.animations.cam
 			}
 
 			if(this.audio_number === 2) {

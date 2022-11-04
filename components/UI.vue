@@ -2,21 +2,20 @@
     <div class="ui">
 
         <button class="button-start" @click="startAudio">Start</button>
+        <button class="fullscreen" @click="toggle"></button>
        <!-- <AudioManager v-if="audio_started.value === true"></AudioManager>   -->
         <p class="credit">
             @polygon1993 for Trinity video assets and scenography. <br>
-            
-        
         </p>
     </div>
 </template>
 <script setup>
+const { toggle, isFullscreen } = useFullscreen(el)
 const emitter = useEmitter()
 const audio = useHowler()
-
 const audio_started = ref(false)
 
-function startAudio() {
+const startAudio = () => {
      console.log('started')
      audio.start()
     
@@ -28,6 +27,7 @@ function startAudio() {
         audio.play('sound_hillz')
      }, 2000);
 }
+
 
 </script>
 
