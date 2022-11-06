@@ -1,18 +1,30 @@
 <template>
     <div class="ui">
+        
+        <div class="debug-menu">
+            <NuxtLink to="/studio">Studio</NuxtLink>
+            <NuxtLink to="/">Experience</NuxtLink>
+        </div>
 
+        <img src="/images/trinity-logo.svg" alt="">
+        <img src="/images/lay-logo.svg" alt="">
+      
         <button class="button-start" @click="startAudio">Start</button>
-        <button class="fullscreen" @click="toggle"></button>
-       <!-- <AudioManager v-if="audio_started.value === true"></AudioManager>   -->
+        <button class="fullscreen" @click="toggle">Fullscreen</button>
+        
         <p class="credit">
-            @polygon1993 for Trinity video assets and scenography. <br>
+            <NuxtLink to="https://twitter.com/polygon1993" target="_blank" rel="noopener">@polygon1993</NuxtLink> 
+            for Trinity video assets and scenography. 
         </p>
+
+        <p>Laylow Live experience from Olympia, Paris - 5 March 2020</p>
     </div>
 </template>
 <script setup>
-const { toggle, isFullscreen } = useFullscreen(el)
+const { toggle } = useFullscreen()
 const emitter = useEmitter()
 const audio = useHowler()
+
 const audio_started = ref(false)
 
 const startAudio = () => {
@@ -29,6 +41,7 @@ const startAudio = () => {
 }
 
 
+
 </script>
 
 
@@ -41,7 +54,7 @@ const startAudio = () => {
 }
 
 .ui {
-    font-family: 'Matrix Code NFI', sans-serif;
+    //font-family: 'Matrix Code NFI', sans-serif;
     position: fixed;
     top: 50px;
    // z-index: 99999;

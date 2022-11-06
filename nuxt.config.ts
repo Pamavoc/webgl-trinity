@@ -1,7 +1,6 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 import glsl from 'vite-plugin-glsl';
 
-
 export default defineNuxtConfig({
     modules: [
         '@vueuse/nuxt',

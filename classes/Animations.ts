@@ -1,6 +1,5 @@
 import { getProject, types as t } from '@theatre/core'
 import { ObjectType } from '@/classes/interfaces/ObjectType';
-import gsap from 'gsap'
 import introductionState from '@/assets/states-animations/Introduction.theatre-project-state.json'
 import studio from "@theatre/studio"
 
@@ -8,9 +7,11 @@ export default class Animations {
 
   vector3D: any
   cameraParams: any
+  studio: any
 
   constructor() {
   
+    this.studio = studio
     const nudgableNumber = (defaultValue) => t.number(defaultValue, { nudgeMultiplier: 0.01 });
 
     this.vector3D = {
@@ -31,26 +32,16 @@ export default class Animations {
       },
     };
 
-    studio.initialize()
-    studio.ui.restore()
+    this.studio.initialize()
+    this.studio.ui.hide()
 
-    if(window.location.pathname === "/studio") {
-     // studio.initialize()
-
-      // import('@theatre/studio').then(studio => {
-      //   studio.default.initialize() 
-      // });
-     
-      
-    }
-   
   }
 
 
   // gsap shit
   createTimeline() {
-    const tl = gsap.timeline({ onUpdate: this.onUpdate })
-    return tl;
+    //const tl = gsap.timeline({ onUpdate: this.onUpdate })
+    //return tl;
   }
 
 

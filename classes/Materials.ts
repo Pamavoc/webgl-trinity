@@ -93,7 +93,7 @@ export default class Materials {
 				uLineStrength: { value: 0.11 },
 				uAverage: { value:0}
 			},
-			transparent: true,
+			transparent: false,
 			fragmentShader: screenFrag,
 			vertexShader: screenVert,
 		} );
@@ -117,7 +117,7 @@ export default class Materials {
 				uLineStrength: { value: 0.11 },
 				uAverage: { value:0}
 			},
-			transparent: true,
+			transparent: false,
 			fragmentShader: screenFrag2,
 			vertexShader: screenVert,
 		} );
@@ -162,6 +162,8 @@ export default class Materials {
 		this.webgl.emitter.on("song_start", (audio_number)=> {
 
 			this.audio_number = audio_number
+		
+
 			console.log(`AUDIO NUMBER : ${audio_number}`)
 			//console.log("intro end")
 	  
@@ -174,7 +176,7 @@ export default class Materials {
 				
 				this.changeMaterial()
 				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
-				// this.webgl.animations.cam
+			
 			}
 
 			if(this.audio_number === 2) {
@@ -198,12 +200,10 @@ export default class Materials {
 
 		
 
-
 			this.cableMaterial.uniforms.uSoundNumber.value = audio_number
 			this.screenMaterial.uniforms.uSoundNumber.value = audio_number
 			this.screenMaterial2.uniforms.uSoundNumber.value = audio_number
 			this.trinityMaterial.uniforms.uSoundNumber.value = audio_number
-			
 		})
 
 	}
@@ -237,11 +237,9 @@ export default class Materials {
 
 	changeMaterial() {
 		this.webgl.scene.instance.traverse(child => {
-			if(/cube-face/ig.test(child.name)) {
-				child.material = this.screenMaterial
-			}
+			
 
-			if(/screen/ig.test(child.name)) {
+			if(/screen/ig.test(child.name) || /cube-face/ig.test(child.name)) {
 				child.material = this.screenMaterial
 			}
 
@@ -354,12 +352,11 @@ export default class Materials {
 			this.screenMaterial.uniforms.uSound3.value  = this.webgl.audio_manager.values[2]
 			this.screenMaterial.uniforms.uSound4.value  = this.webgl.audio_manager.values[3]
 			this.screenMaterial.uniforms.uSound5.value  = this.webgl.audio_manager.values[4]
-
+			this.screenMaterial.uniforms.uHeight.value = this.webgl.audio_manager.volume
 
 			this.screenMaterial2.uniforms.uSound2.value = this.webgl.audio_manager.values[1]
 			this.screenMaterial2.uniforms.uHeight.value = this.webgl.audio_manager.volume
-		
-			this.screenMaterial.uniforms.uHeight.value = this.webgl.audio_manager.volume
+	
 
 		}
 		

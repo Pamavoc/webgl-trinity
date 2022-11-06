@@ -72,6 +72,14 @@ export default class WebGL {
     this.loadMap('trinity-2.glb')
 
 
+    this.emitter.on('studio', () => {
+      this.animations.studio.ui.restore()
+    })
+
+    this.emitter.on('home', ()=> {
+      this.animations.studio.ui.hide()
+    })
+
 
     this.emitter.on('audio_started', () => {
 
@@ -81,11 +89,6 @@ export default class WebGL {
       // console.log(cube)
 
       this.animations.createIntroduction(this.camera)
-      
-      // this.animations.start(this.camera.instance, target)
-    
-
-
       this.materials.playVideos()
     
       

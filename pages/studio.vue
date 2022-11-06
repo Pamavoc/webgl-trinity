@@ -1,12 +1,11 @@
-<template lang="">
-    <div>
-        
-    </div>
+<template>
 </template>
-<script>
-export default {
-    
-}
+<script setup>
+onMounted(()=> {
+    const emitter = useEmitter()
+    emitter.emit('studio')
+})
+
 </script>
 <style lang="">
     
