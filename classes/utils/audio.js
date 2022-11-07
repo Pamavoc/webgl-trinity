@@ -120,12 +120,12 @@ class AudioManager {
 			
 			this.emitter.emit("song_start", 0)
 
-		} else if(this.playlist[this.currentPlay] === "/sounds/megatron-ss.mp3") {
+		} else if(this.playlist[this.currentPlay] === "/sounds/megatron-ss.mp3" && this.alreadyPlayed === false) {
 			
 		
 			this.emitter.emit("song_start", 1)
 
-		} else if(this.playlist[this.currentPlay] === "/sounds/burningman-s.mp3") {
+		} else if(this.playlist[this.currentPlay] === "/sounds/burningman-s.mp3" && this.alreadyPlayed === false) {
 
 			this.emitter.emit("song_start", 2)
 			
