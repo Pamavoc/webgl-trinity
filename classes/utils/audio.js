@@ -119,13 +119,14 @@ class AudioManager {
 		if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3" && this.alreadyPlayed === false) {
 			
 			this.emitter.emit("song_start", 0)
+			this.alreadyPlayed = true
 
-		} else if(this.playlist[this.currentPlay] === "/sounds/megatron-ss.mp3" && this.alreadyPlayed === false) {
+		} else if(this.playlist[this.currentPlay] === "/sounds/megatron-ss.mp3") {
 			
 		
 			this.emitter.emit("song_start", 1)
 
-		} else if(this.playlist[this.currentPlay] === "/sounds/burningman-s.mp3" && this.alreadyPlayed === false) {
+		} else if(this.playlist[this.currentPlay] === "/sounds/burningman-s.mp3") {
 
 			this.emitter.emit("song_start", 2)
 			
