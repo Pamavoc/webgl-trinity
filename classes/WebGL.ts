@@ -111,6 +111,11 @@ export default class WebGL {
       // window.audio = this.audio_manager
       
     })
+    
+
+    this.emitter.on("song_end", ()=>{
+      this.animations.createEnding()
+    })
 
     if (/debug/.test(window.location.href)) {
       this.debug = true

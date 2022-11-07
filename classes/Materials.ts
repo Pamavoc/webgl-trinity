@@ -6,7 +6,6 @@ import cableVert from '@/assets/glsl/cable/cable.vert';
 
 import screenFrag from '@/assets/glsl/screen/screen.frag';
 import screenFrag2 from '@/assets/glsl/screen/screen2.frag';
-import screenFrag3 from '@/assets/glsl/screen/screen3.frag';
 import screenVert from '@/assets/glsl/screen/screen.vert';
 
 import trinityFrag from '@/assets/glsl/trinity/trinity.frag';
@@ -49,7 +48,6 @@ export default class Materials {
 
 	create() {
 		
-
 
 		// video
 		this.cubeMaterial2 = new THREE.RawShaderMaterial( {
@@ -157,16 +155,11 @@ export default class Materials {
 
 		this.solMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x2B2B2B), roughness: 1})
 
-		const target = new THREE.Vector3(0, 1, 0)
-
 		this.webgl.emitter.on("song_start", (audio_number)=> {
 
-			this.audio_number = audio_number
-		
-
+			this.audio_number = audio_number		
 			console.log(`AUDIO NUMBER : ${audio_number}`)
-			//console.log("intro end")
-	  
+
 		
 			if(this.audio_number === 0) {
 				this.trinityMaterial.uniforms.uColor.value = { r: 30/255, g: 202/255, b:154/255 };
@@ -175,22 +168,15 @@ export default class Materials {
 			if(this.audio_number === 1) {
 				
 				this.changeMaterial()
-				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
-			
 			}
 
 			if(this.audio_number === 2) {
 				
-				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
-
 				this.screenMaterial.uniforms.uColor.value = {r: 0.99, g: 0.56, b: 0.04}; // {r: 0.95, g: 0.38, b: 0.07}
 				this.screenMaterial.uniforms.uAlpha.value = 0.8
 
 				this.screenMaterial2.uniforms.uColor.value = {r: 0.95, g: 0.38, b: 0.07}
 				this.screenMaterial2.uniforms.uAlpha.value = 0.8
-
-
-				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
 
 				this.trinityMaterial.uniforms.uColor.value = { r: 191/255, g: 96/255, b: 90/255 };
 				this.cableMaterial.uniforms.uColor2.value = {r: 0.99, g: 0.56, b: 0.04}

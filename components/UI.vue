@@ -7,17 +7,20 @@
         </div>
 
         <img src="/images/trinity-logo.svg" alt="">
-        <img src="/images/lay-logo.svg" alt="">
-      
-        <button class="button-start" @click="startAudio">Start</button>
-        <button class="fullscreen" @click="toggle">Fullscreen</button>
-        
+        <img src="/images/lay-logo.svg" alt=""> 
+    
         <p class="credit">
             <NuxtLink to="https://twitter.com/polygon1993" target="_blank" rel="noopener">@polygon1993</NuxtLink> 
             for Trinity video assets and scenography. 
         </p>
 
         <p>Laylow Live experience from Olympia, Paris - 5 March 2020</p>
+
+
+        <button class="button-start" @click="startAudio">Start</button>
+        <button class="fullscreen" @click="toggle">Fullscreen</button>
+        
+      
     </div>
 </template>
 <script setup>
@@ -57,7 +60,7 @@ const startAudio = () => {
     //font-family: 'Matrix Code NFI', sans-serif;
     position: fixed;
     top: 50px;
-   // z-index: 99999;
+    // z-index: 99999;
     //width: 100vw;
     //height: 100vh;
 

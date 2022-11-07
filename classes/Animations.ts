@@ -33,7 +33,13 @@ export default class Animations {
     };
 
     this.studio.initialize()
-    this.studio.ui.hide()
+
+    if(window.location.pathname === '/studio') {
+      this.studio.ui.restore()
+    } else {
+      this.studio.ui.hide()
+    }
+   
 
   }
 
@@ -138,16 +144,44 @@ export default class Animations {
     // const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
     const sheet = this.createSheet(project, 'Camera Animation')
      
-    this.createTheatreObject(sheet, "camera", camera.instance, this.cameraParams)
+    this.createTheatreObject(
+      {
+        type: "3d", 
+        sheet: sheet,
+        object_name: "camera", 
+        mesh: camera.instance, 
+        object_properties: this.cameraParams
+      }
+    )
+    
     this.playAnimations(project, sheet, 1)
   }
 
+  createEnding() {
 
-  createTheatreObject(sheet, object_name, mesh, object_properties) {
+  }
+
+  createTheatreObject2D() {
+
+  }
+
+
+  createTheatreObject({type, sheet, object_name, mesh, object_properties}) {
 
     const object = sheet.object(object_name, object_properties)
 
-    this.attachOnValueChange(object, object_name, mesh)
+    if(type == "2d") {
+
+
+    } else if(type == "3d") {
+
+      this.attachOnValueChange(object, object_name, mesh)
+    
+    } else if(type == "both") {
+
+    }
+
+
   }
 
   attachOnValueChange(object, object_name, mesh) {

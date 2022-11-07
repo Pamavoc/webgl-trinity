@@ -22,6 +22,7 @@ class AudioManager {
 
 	
 		this.emitter = emitter
+		this.alreadyPlayed = false
 
 		//this.emitter = emitter
 		this.fftSize = 1024
@@ -115,7 +116,7 @@ class AudioManager {
 
 		console.log( this.currentPlay, this.playlist, this.playlist.length)
 
-		if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3") {
+		if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3" && this.alreadyPlayed === false) {
 			
 			this.emitter.emit("song_start", 0)
 
@@ -126,10 +127,14 @@ class AudioManager {
 
 		} else if(this.playlist[this.currentPlay] === "/sounds/burningman-s.mp3") {
 
-			console.log("BURNINGMAN")
 			this.emitter.emit("song_start", 2)
 			
+		} else if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3" && this.alreadyPlayed === true) {
+			
+			this.emitter.emit("song_end")
+		
 		}
+
 
 
 		this._src = this.playlist[this.currentPlay ];
