@@ -42,10 +42,8 @@ export default class Animations {
     this.uiParams = {
       opacity: t.number(1, { range: [0, 1] }),
       width: t.number(100, { range: [0, 100] }),
-      transforms: {
-        x: 0,
-        y: 0,
-      },
+      y: 0,
+      x:0
     }
 
     this.studio.initialize()
@@ -189,8 +187,8 @@ export default class Animations {
           if(property == 'opacity') {
             real_object.style[property] = `${value}`;
           
-          } else if(property == 'transforms') {
-
+          } else if(property == 'x' || property == 'y') {
+            real_object.style.transform =  `translate${property}(${value}px)`
 
           } else {
             real_object.style[property] = `${value}%`;
