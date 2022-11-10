@@ -15,14 +15,10 @@ export default defineComponent({
 
       const raf = useRAF();
       const emitter = useEmitter();
-      
-  
-  
+    
       const webGL = new WebGL({ emitter });
       raf.subscribe('WebGL', () => { 
-        webGL.update();
-
-       
+        webGL.update();       
       });
 
     });
@@ -47,6 +43,11 @@ body {
   height: 100vh;
   width: 100vw;
   background: #000000;
+  transition: opacity 1.5s ease-out;
+
+  &.active {
+    opacity: 0;
+  }
   
   canvas {
    // opacity: 0;

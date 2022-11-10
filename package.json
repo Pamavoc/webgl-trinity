@@ -14,6 +14,7 @@
     "mitt": "^3.0.0",
     "nuxt": "^3.0.0-rc.13",
     "postprocessing": "^6.29.0",
+    "stats.js": "^0.17.0",
     "three": "latest",
     "tweakpane": "latest",
     "vite-plugin-glsl": "^0.5.2"

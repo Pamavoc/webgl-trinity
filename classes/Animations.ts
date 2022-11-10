@@ -1,4 +1,4 @@
-import { getProject, types as t } from '@theatre/core'
+import { getProject, types as t, val } from '@theatre/core'
 import { ObjectType } from '@/classes/interfaces/ObjectType';
 import introductionState from '@/assets/states-animations/Introduction.theatre-project-state.json'
 import studio from "@theatre/studio"
@@ -8,10 +8,16 @@ export default class Animations {
   vector3D: any
   cameraParams: any
   studio: any
+  canvas: any
+  ui: any
+  uiParams: any
+  projects: []
 
   constructor() {
   
     this.studio = studio
+    this.canvas = document.querySelector(".container-canvas canvas")
+    this.ui = document.querySelector(".ui")
     const nudgableNumber = (defaultValue) => t.number(defaultValue, { nudgeMultiplier: 0.01 });
 
     this.vector3D = {
@@ -32,6 +38,16 @@ export default class Animations {
       },
     };
 
+
+    this.uiParams = {
+      opacity: t.number(1, { range: [0, 1] }),
+      width: t.number(100, { range: [0, 100] }),
+      transforms: {
+        x: 0,
+        y: 0,
+      },
+    }
+
     this.studio.initialize()
 
     if(window.location.pathname === '/studio') {
@@ -49,69 +65,6 @@ export default class Animations {
     //const tl = gsap.timeline({ onUpdate: this.onUpdate })
     //return tl;
   }
-
-
-
-
-  start(camera, target) {
-
-
-
-  //   const tl = gsap.timeline({ 
-  //     onUpdate: ()=> {
-  //      camera.lookAt(target)
-  //   } 
-  //  })
-
-
-    // tl.to('.button-start', { y: -10, opacity: 0, duration: 0.4})
-    // tl.to('canvas', { opacity: 1, duration: 0.8, ease: 'power4.inOut'})
-
-    // tl.to(camera.position, { x: 12, y: 0.5, z: -6, ease: 'power2.inOut', duration: 5 })
-    // tl.to(camera.position, { x: 11, y: 3, z: 8, ease: 'power2.out', duration: 10 }, 7)
-    // tl.to(camera.position, { z: "-=5", ease: 'power2.out', duration: 4 }, 18)
-    // tl.to(camera.position, { z: "+=5", ease: 'power2.out', duration: 4 }, 22)
-    // tl.to(camera.position, { x: 12, y: 0.5, z: -6, ease: 'power2.out', duration: 4 }, 24)
-    // tl.to(camera.position, { x: 10, y: 1, z: -3, ease: 'power2.out', duration: 4 }, 26)
-    // //tl.to(camera.rotation, { x: 0.612, y: 1.41, z: 0.60,  ease: 'power4.inOut', duration: 4}) 
-    // // tl.to(camera.quaternion, { x: 0.612, y: 1.41, z: 0.60, w: 0  ease: 'power4.inOut', duration: 4}) 
-    // tl.to('.ui', { display: 'none'}, 2)
-
-    
-
-  }
-
-  onUpdate() {
-    
-  }
-
-  cameraMoveSong(audio_number, camera, target) {
-
-
-
-  //   const tl = gsap.timeline({ 
-  //     onUpdate: ()=> {
-  //      camera.lookAt(target)
-  //   } 
-  //  })
-   
-    if(audio_number === 1) {
-      
-      // tl.to(camera.position, { z: "+=11",  y: "+=1", x: "-=3", ease: 'power2.inOut', duration: 5 }, 0)
-      // tl.to(camera.position, { z: "-=11", y: "+=2",  x: "+=3", ease: 'power2.out', duration: 5 }, 5)
-      // tl.to(camera.position, {  x: 7.7231, y: 1.294, z: -2.2, ease: 'power2.out', duration: 5}, 10)
-      // tl.to(camera.position, {  z: "-=4.2", y: 1.2, ease: 'power2.out', duration: 5}, 15)
-      // tl.to(camera.position, {  x:7.98, y: 1.981, z:1, ease: 'power2.out', duration: 3}, 20)
-
-    }
-
-    if(audio_number === 2) {
-      // tl.to(camera.position, { x: 6.762, y: 1.2, z: 4.3,  ease: 'power2.inOut', duration: 4})
-      // tl.to(camera.position, { x: 12, y: 4.3, z: 0.5,  ease: 'power2.inOut', duration: 12}, 4)
-      // tl.to(camera.position, { x: 4.6, y: 1.2, z: 0.95,  ease: 'power2.inOut', duration: 4})      
-    }
-  }
-
   
 
   createProject(project_name, project_state?: ObjectType) {
@@ -139,74 +92,137 @@ export default class Animations {
     return sheet;
   }
 
+
+  createMicroInteraction() {
+    const project = this.createProject('Micro-anim')
+    const sheet = this.createSheet(project, 'Button Animation')
+
+    this.createTheatreObject(
+      {
+        sheet: sheet,
+        objects: [
+          {
+            name: "button p",
+            type: "2d", // dom 
+            properties: this.uiParams,
+            real: this.ui.querySelector('.button-start p'),
+          },
+          {
+            name: "border-bottom",
+            type: "2d", // dom 
+            properties: this.uiParams,
+            real: this.ui.querySelector('.border-bottom'),
+          },
+          {
+            name: "border-top",
+            type: "2d", // dom 
+            properties: this.uiParams,
+            real: this.ui.querySelector('.border-top'),
+          },
+        ],
+      })
+
+  }
+
+
   createIntroduction(camera) {
     const project = this.createProject('Introduction', { introductionState })
     // const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
     const sheet = this.createSheet(project, 'Camera Animation')
-     
+    
+
     this.createTheatreObject(
       {
-        type: "3d", 
         sheet: sheet,
-        object_name: "camera", 
-        mesh: camera.instance, 
-        object_properties: this.cameraParams
+        objects: [
+          {
+            name: "camera", // theatre element (just a name)
+            type: "3d", // dom or 3d (type of element)
+            properties: this.cameraParams, // properties to create the sheet in theatre 
+            real: camera.instance, // real element to link with the properties and name
+          },
+          {
+            name: "ui",
+            type: "2d", // dom 
+            properties: this.uiParams,
+            real: this.ui
+          },
+          {
+            name: "canvas",
+            type: "2d", // dom 
+            properties: this.uiParams,
+            real: this.canvas
+          },
+        ],  
       }
     )
-    
+
+
     this.playAnimations(project, sheet, 1)
   }
 
+  
+
   createEnding() {
-
+    console.log('ending')
   }
 
-  createTheatreObject2D() {
+  createTheatreObject({sheet, objects}) {
 
-  }
-
-
-  createTheatreObject({type, sheet, object_name, mesh, object_properties}) {
-
-    const object = sheet.object(object_name, object_properties)
-
-    if(type == "2d") {
-
-
-    } else if(type == "3d") {
-
-      this.attachOnValueChange(object, object_name, mesh)
+   for (let i = 0; i < objects.length; i++) {
+    const object = objects[i];
+    const object_sheet = sheet.object(object.name, object.properties)  
+    this.attachOnValueChange(object_sheet, object.name, object.real, object.type)
+   }
     
-    } else if(type == "both") {
-
-    }
-
-
   }
 
-  attachOnValueChange(object, object_name, mesh) {
+  attachOnValueChange(object, object_name, real_object, type) {
     
-
     object.onValuesChange((values) => {
+
+      if (type == "2d") {
+
+        for (const [property, value] of Object.entries(values)) {    
+
+
+          if(property == 'opacity') {
+            real_object.style[property] = `${value}`;
+          
+          } else if(property == 'transforms') {
+
+
+          } else {
+            real_object.style[property] = `${value}%`;
+          }
+            
+        }
+
+      } else if (type == "3d") {
+
+        
+        // position // rotation
+        for (const [transform, value] of Object.entries(values.transforms)) {
+          //@ts-ignore
+          real_object[transform].set(value.x, value.y, value.z);
+        }
+
+
+        if (object_name === "camera") {
+          real_object.fov = values.fov;
+          real_object.zoom = values.zoom;
+
+          for (const [transform, value] of Object.entries(values.target)) {
+            //@ts-ignore
+            real_object.lookAt(value.x, value.y, value.z);
+          }
+
+          real_object.updateProjectionMatrix();
+        }
+      }
+      
      
-      // position // rotation
-      for (const [transform, value] of Object.entries(values.transforms)) {
-        //@ts-ignore
-        mesh[transform].set(value.x, value.y, value.z);
-      }
-
-      if(object_name === "camera")  {
-
-        mesh.fov = values.fov
-        mesh.zoom = values.zoom
-
-        for (const [transform, value] of Object.entries(values.target)) {
-           //@ts-ignore
-          mesh.lookAt(value.x, value.y, value.z);
-        }  
-
-        mesh.updateProjectionMatrix();
-      }
+     
     })
   }
 

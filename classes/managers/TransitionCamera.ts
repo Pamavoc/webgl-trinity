@@ -20,7 +20,6 @@ class TransitionCamera {
     this.isCameraHidden = false;
 
     this.init();
-
     this.emitter.on("hideCamera", () => (this.isCameraHidden = true));
     this.emitter.on("showCamera", () => (this.isCameraHidden = false));
   }
@@ -40,17 +39,14 @@ class TransitionCamera {
       transparent: true,
     });
     this.mesh = new Mesh(this.geometry, this.material);
-
-    console.log(this.scene)
+    this.mesh.name = "Transition"
 
     this.scene.instance.add(this.mesh);
   }
 
   update() {
     this.material.uniforms.uAlpha.value = lerp(
-      this.material.uniforms.uAlpha.value,
-      this.isCameraHidden ? 1 : 0,
-      0.3
+      this.material.uniforms.uAlpha.value, this.isCameraHidden ? 1 : 0, 0.3
     );
   }
 }

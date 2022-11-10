@@ -17,12 +17,15 @@
             },
             "zoom": 1,
             "fov": 50
+          },
+          "ui": {
+            "opacity": -5
           }
         }
       },
       "sequence": {
         "subUnitsPerUnit": 30,
-        "length": 112.94,
+        "length": 100.26,
         "type": "PositionalSequence",
         "tracksByObject": {
           "camera": {
@@ -551,6 +554,43 @@
               "[\"transforms\",\"rotation\",\"z\"]": "XHN480uy24",
               "[\"zoom\"]": "-6XfhP32Zo"
             }
+          },
+          "canvas": {
+            "trackData": {
+              "EEA-KN9xQI": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "canvas:[\"opacity\"]",
+                "keyframes": [
+                  {
+                    "id": "HMaYHNmFFZ",
+                    "position": 87.6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 1
+                  },
+                  {
+                    "id": "EhnvMw7O_W",
+                    "position": 95.067,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"opacity\"]": "EEA-KN9xQI"
+            }
           }
         }
       }
@@ -558,6 +598,7 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
+    "YtatyU_sqwzZQIqJ",
     "m_dLPZhxi5jaweqY",
     "8AWtL__tW7L3zOTE",
     "0GIPF_HgJ8qtaAs2",

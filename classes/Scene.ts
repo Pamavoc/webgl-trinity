@@ -10,8 +10,6 @@ export default class Scene {
   camera: any;
   controls: any;
   webgl: any;
-  ground: any;
-  tPaper: any;
   uniforms: any;
   material: any;
   debug: any
@@ -109,7 +107,7 @@ export default class Scene {
     this.instance.fog.far = camera_h * 0.6 + 24;
 
     this.webgl.materials.update(elapsedTime);
-    // this.transition.update()
+    this.transition.update()
 
    // console.log(this.camera.position.x, this.camera.position.y, this.camera.position.z)
     // this.controls.update();
