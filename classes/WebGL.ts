@@ -82,7 +82,7 @@ export default class WebGL {
       this.animations.studio.ui.hide()
     })
 
-    this.animations.createMicroInteraction()
+    // this.animations.createMicroInteraction()
 
 
     this.emitter.on('audio_started', () => {

@@ -1,6 +1,5 @@
 <template>
-    <div class="ui">
-        
+    <div class="ui">   
         <div class="debug-menu">
             <NuxtLink to="/">HOME</NuxtLink>
             <NuxtLink to="/studio">STUDIO</NuxtLink>
@@ -12,6 +11,7 @@
 
             <p>Laylow Live experience from Olympia, Paris - 5 March 2020</p>
             <img src="/images/trinity-logo.svg" alt="">
+            <img src="/images/gobelins.svg" alt="">
             <img src="/images/lay-logo.svg" alt=""> 
         </div>
 
@@ -20,10 +20,9 @@
             <p>START</p>
             <div class="border-bottom"></div>
         </button>
-        <button class="button-fullscreen" @click="toggle">
-           
+        <!-- <button class="button-fullscreen" @click="toggle">
             <img src="/images/fullscreen.svg" alt="">
-        </button>      
+        </button>     -->
     </div>
 </template>
 <script setup>
@@ -36,7 +35,7 @@ const audio_started = ref(false)
 const startAudio = () => {
      console.log('started')
      audio.start()
-    
+     toggle()
      audio_started.value = true
     
      emitter.emit('audio_started')

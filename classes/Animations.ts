@@ -1,4 +1,4 @@
-import { getProject, types as t, val } from '@theatre/core'
+import { getProject, types as t } from '@theatre/core'
 import { ObjectType } from '@/classes/interfaces/ObjectType';
 import introductionState from '@/assets/states-animations/Introduction.theatre-project-state.json'
 import studio from "@theatre/studio"
@@ -42,8 +42,7 @@ export default class Animations {
     this.uiParams = {
       opacity: t.number(1, { range: [0, 1] }),
       width: t.number(100, { range: [0, 100] }),
-      y: 0,
-      x:0
+      transform: { x:0, y:0 }
     }
 
     this.studio.initialize()
@@ -122,13 +121,16 @@ export default class Animations {
 
   }
 
+  // createIntroduction2() {
+  //   const project = getProject('Introduction', { introductionState });
+  //   const sheet = project.sheet('Camera Animation');
+  // }
 
   createIntroduction(camera) {
-    const project = this.createProject('Introduction', { introductionState })
+    const project = this.createProject('Introduction', { state:  introductionState })
     // const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
     const sheet = this.createSheet(project, 'Camera Animation')
     
-
     this.createTheatreObject(
       {
         sheet: sheet,
@@ -154,7 +156,6 @@ export default class Animations {
         ],  
       }
     )
-
 
     this.playAnimations(project, sheet, 1)
   }
@@ -183,12 +184,12 @@ export default class Animations {
 
         for (const [property, value] of Object.entries(values)) {    
 
-
           if(property == 'opacity') {
             real_object.style[property] = `${value}`;
           
-          } else if(property == 'x' || property == 'y') {
-            real_object.style.transform =  `translate${property}(${value}px)`
+          } else if(property == 'transform') {
+            //@ts-ignore
+            real_object.style.transform =  `translate(${value.x}px, ${value.y}px)`
 
           } else {
             real_object.style[property] = `${value}%`;
