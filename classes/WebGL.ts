@@ -74,47 +74,6 @@ export default class WebGL {
     this.loadMap('trinity-2.glb')
 
 
-    this.emitter.on('studio', () => {
-      this.animations.studio.ui.restore()
-    })
-
-    this.emitter.on('home', ()=> {
-      this.animations.studio.ui.hide()
-    })
-
-    // this.animations.createMicroInteraction()
-
-
-    this.emitter.on('audio_started', () => {
-
-      // trigger anim webgl
-      // const target = new THREE.Vector3(0, 1, 0)
-      // const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
-      // console.log(cube)
-
-      this.animations.createIntroduction(this.camera)
-      this.materials.playVideos()
-    
-      
-      this.audio_manager = useAudio(this.emitter)
-     
-      this.audio_manager.start( {
-           onBeat: ()=> {
-
-            const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
-            this.emitter.emit('beat_sent', average)
-           }, 
-           live: false,
-           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-ss.mp3', '/sounds/burningman-s.mp3']
-      })    
-
-  
-      this.audio_started = true 
-      // window.audio = this.audio_manager
-      
-    })
-    
-
     if (/debug/.test(window.location.href)) {
       this.debug = true
       this.camera.tweak()
@@ -126,7 +85,6 @@ export default class WebGL {
 
     console.log('%c Built by @pamavoc ', 'background: #090909; color: #1ECA9A');
   }
-
 
 
   switchMap = (map) => {
@@ -152,9 +110,49 @@ export default class WebGL {
 
   }
 
+  experienceEvents = () => {
+    this.emitter.on('studio', () => {
+      this.animations.studio.ui.restore()
+    })
+
+    this.emitter.on('home', ()=> {
+      this.animations.studio.ui.hide()
+    })
+
+
+    this.emitter.on('audio_started', () => {
+
+      // trigger anim webgl
+      // const target = new THREE.Vector3(0, 1, 0)
+      // const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
+      // console.log(cube)
+      
+      this.animations.createMicroInteraction()
+      this.animations.createIntroduction(this.camera)
+      this.materials.playVideos()
+      this.audio_manager = useAudio(this.emitter)
+     
+      this.audio_manager.start( {
+           onBeat: ()=> {
+
+            const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
+            this.emitter.emit('beat_sent', average)
+           }, 
+           live: false,
+           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-ss.mp3', '/sounds/burningman-s.mp3']
+      })    
+
+  
+      this.audio_started = true 
+      // window.audio = this.audio_manager
+      
+    })
+  }
+
 
   setEvents = () => {
     this.addEvents();
+    this.experienceEvents();
     this.onResize();
   };
 

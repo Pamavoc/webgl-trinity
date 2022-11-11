@@ -57,13 +57,6 @@ export default class Animations {
   }
 
 
-  // gsap shit
-  createTimeline() {
-    //const tl = gsap.timeline({ onUpdate: this.onUpdate })
-    //return tl;
-  }
-  
-
   createProject(project_name, project_state?: ObjectType) {
    // Create a project for the animation
     let project;
@@ -117,14 +110,12 @@ export default class Animations {
             real: this.ui.querySelector('.border-top'),
           },
         ],
-      })
+    })
 
+    this.playAnimations(project, sheet, 1)
   }
 
-  // createIntroduction2() {
-  //   const project = getProject('Introduction', { introductionState });
-  //   const sheet = project.sheet('Camera Animation');
-  // }
+
 
   createIntroduction(camera) {
     const project = this.createProject('Introduction', { state:  introductionState })

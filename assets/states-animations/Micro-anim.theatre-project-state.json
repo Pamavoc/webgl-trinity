@@ -7,13 +7,17 @@
             "width": 100
           },
           "button p": {
-            "X": -400
+            "X": -400,
+            "transforms": {
+              "x": 52,
+              "y": -2
+            }
           }
         }
       },
       "sequence": {
         "subUnitsPerUnit": 30,
-        "length": 2.56,
+        "length": 2,
         "type": "PositionalSequence",
         "tracksByObject": {
           "start": {
@@ -51,7 +55,32 @@
               "534yqYhLqR": {
                 "type": "BasicKeyframedTrack",
                 "__debugName": "button p:[\"opacity\"]",
-                "keyframes": []
+                "keyframes": [
+                  {
+                    "id": "LeR6s_oW4c",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 1
+                  },
+                  {
+                    "id": "HpwvjfDjHp",
+                    "position": 1.7,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 0
+                  }
+                ]
               },
               "D_y4JzPeje": {
                 "type": "BasicKeyframedTrack",
@@ -67,7 +96,7 @@
                       0.5,
                       0
                     ],
-                    "value": -59
+                    "value": -76
                   },
                   {
                     "id": "EzcAd0auP8",
@@ -97,7 +126,7 @@
                       0.5,
                       0
                     ],
-                    "value": 19
+                    "value": 1
                   }
                 ]
               },
@@ -105,13 +134,50 @@
                 "type": "BasicKeyframedTrack",
                 "__debugName": "button p:[\"width\"]",
                 "keyframes": []
+              },
+              "qB0Im2vS06": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "button p:[\"transform\",\"x\"]",
+                "keyframes": []
+              },
+              "LX3PWrwlBy": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "button p:[\"transform\",\"y\"]",
+                "keyframes": [
+                  {
+                    "id": "cTIUq6XPbf",
+                    "position": 1.2,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.55,
+                      0.085
+                    ],
+                    "value": 0
+                  },
+                  {
+                    "id": "VAMxPRoGWf",
+                    "position": 1.7,
+                    "connectedRight": true,
+                    "handles": [
+                      0.68,
+                      0.53,
+                      0.5,
+                      0
+                    ],
+                    "value": -20
+                  }
+                ]
               }
             },
             "trackIdByPropPath": {
               "[\"opacity\"]": "534yqYhLqR",
               "[\"y\"]": "D_y4JzPeje",
               "[\"x\"]": "P_D3bCt33o",
-              "[\"width\"]": "sNpIrTL-6G"
+              "[\"width\"]": "sNpIrTL-6G",
+              "[\"transform\",\"x\"]": "qB0Im2vS06",
+              "[\"transform\",\"y\"]": "LX3PWrwlBy"
             }
           },
           "border-bottom": {
@@ -149,7 +215,7 @@
                   },
                   {
                     "id": "QsPDbhj60j",
-                    "position": 1.2,
+                    "position": 0.767,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -204,7 +270,7 @@
                   },
                   {
                     "id": "nPv-v-fS6j",
-                    "position": 2.4,
+                    "position": 1.367,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -230,6 +296,8 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
+    "BgfyjdFlCLTInP5l",
+    "Xlscy6aMkb86m6hZ",
     "sTDvJIbJYbtnzNjB"
   ]
 }
