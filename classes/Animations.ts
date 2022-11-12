@@ -11,10 +11,11 @@ export default class Animations {
   canvas: any
   ui: any
   uiParams: any
-  projects: []
+  projects: Array<any>
 
   constructor() {
   
+    this.projects = []
     this.studio = studio
     this.canvas = document.querySelector(".container-canvas canvas")
     this.ui = document.querySelector(".ui")
@@ -56,6 +57,8 @@ export default class Animations {
 
   }
 
+  
+
 
   // gsap shit
   createTimeline() {
@@ -75,6 +78,7 @@ export default class Animations {
      
     }
 
+    
     return project;
     
   }
@@ -86,13 +90,40 @@ export default class Animations {
     if(audio) {
       this.attachAudio(sheet, audio)                                    
     }
+
     return sheet;
+  }
+
+  createProjectAndSheet(project_name: String, sheet_name: String, project_state?: ObjectType, audio?) {
+
+    let project;
+    let sheet;
+
+    if (project_state) {
+      project = this.createProject(project_name, project_state)
+
+    } else {
+      project = this.createProject(project_name)
+    }
+
+    if (audio) {
+      sheet = this.createSheet(project, sheet_name, audio)
+
+    } else {
+      sheet = this.createSheet(project, sheet_name)
+    }
+
+    this.projects.push({ project_name, project, sheet })
+
+    return { project, sheet }
   }
 
 
   createMicroInteraction() {
-    const project = this.createProject('Micro-anim')
-    const sheet = this.createSheet(project, 'Button Animation')
+    //const project = this.createProject('Micro-anim')
+    //const sheet = this.createSheet(project, 'Button Animation')
+    const { sheet } = this.createProjectAndSheet('Micro-anim', 'Button Animation')
+
 
     this.createTheatreObject(
       {
@@ -121,15 +152,12 @@ export default class Animations {
 
   }
 
-  // createIntroduction2() {
-  //   const project = getProject('Introduction', { introductionState });
-  //   const sheet = project.sheet('Camera Animation');
-  // }
-
   createIntroduction(camera) {
-    const project = this.createProject('Introduction', { state:  introductionState })
+   // const project = this.createProject('Introduction', { state:  introductionState })
     // const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
-    const sheet = this.createSheet(project, 'Camera Animation')
+   // const sheet = this.createSheet(project, 'Camera Animation')
+
+    const { sheet, project } = this.createProjectAndSheet('Introduction', 'Camera Animation', { state:  introductionState })
     
     this.createTheatreObject(
       {

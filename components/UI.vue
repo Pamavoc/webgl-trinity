@@ -24,6 +24,12 @@
             <img src="/images/fullscreen.svg" alt="">
         </button>     -->
     </div>
+
+    <div class="ui-permanent">
+
+    </div>
+
+
 </template>
 <script setup>
 const { toggle } = useFullscreen()
