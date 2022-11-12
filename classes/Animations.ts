@@ -60,13 +60,6 @@ export default class Animations {
   
 
 
-  // gsap shit
-  createTimeline() {
-    //const tl = gsap.timeline({ onUpdate: this.onUpdate })
-    //return tl;
-  }
-  
-
   createProject(project_name, project_state?: ObjectType) {
    // Create a project for the animation
     let project;
@@ -148,8 +141,9 @@ export default class Animations {
             real: this.ui.querySelector('.border-top'),
           },
         ],
-      })
+    })
 
+   // this.playAnimations(project, sheet, 1)
   }
 
   createIntroduction(camera) {

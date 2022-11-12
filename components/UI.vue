@@ -125,7 +125,7 @@ const startAudio = () => {
         background: none;
         width: 200px;
         border:none;
-        
+        // padding: 6px 22px 12px 22px;
         color: #1ECA9A;
         transition: all 0.35s ease-in-out;
         border-radius: 5.38462px;
@@ -137,8 +137,12 @@ const startAudio = () => {
         }
 
         p {
+            margin-block-end: 0;
+            margin-block-start: 0;
             margin:0;
-            padding: 6px 22px 12px 22px;
+            padding-top: 8px;
+            padding-bottom: 14px;
+            //padding: 6px 22px 12px 22px;
         }
 
         &:hover {
