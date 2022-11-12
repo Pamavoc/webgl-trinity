@@ -1,6 +1,7 @@
 import { getProject, types as t } from '@theatre/core'
 import { ObjectType } from '@/classes/interfaces/ObjectType';
 import introductionState from '@/assets/states-animations/Introduction.theatre-project-state.json'
+import microState from '@/assets/states-animations/Micro-anim.theatre-project-state.json'
 import studio from "@theatre/studio"
 
 export default class Animations {
@@ -11,11 +12,12 @@ export default class Animations {
   canvas: any
   ui: any
   uiParams: any
-  projects: Array<any>
+  btnParams: any
+  anims: Array<any>
 
   constructor() {
   
-    this.projects = []
+    this.anims = []
     this.studio = studio
     this.canvas = document.querySelector(".container-canvas canvas")
     this.ui = document.querySelector(".ui")
@@ -40,11 +42,16 @@ export default class Animations {
     };
 
 
-    this.uiParams = {
+    this.btnParams = {
       opacity: t.number(1, { range: [0, 1] }),
       width: t.number(100, { range: [0, 100] }),
       transform: { x:0, y:0 }
     }
+
+    this.uiParams = {
+      opacity: t.number(1, { range: [0, 1] }),
+      width: t.number(100, { range: [0, 100] }),
+   }
 
     this.studio.initialize()
 
@@ -55,9 +62,13 @@ export default class Animations {
     }
    
 
+
   }
 
-  
+  createAnimations(camera) {
+    this.createStartAnim()
+    this.createIntroduction(camera)
+  }
 
 
   createProject(project_name, project_state?: ObjectType) {
@@ -106,16 +117,16 @@ export default class Animations {
       sheet = this.createSheet(project, sheet_name)
     }
 
-    this.projects.push({ project_name, project, sheet })
+    this.anims.push({ project_name, project, sheet })
 
     return { project, sheet }
   }
 
 
-  createMicroInteraction() {
+  createStartAnim() {
     //const project = this.createProject('Micro-anim')
     //const sheet = this.createSheet(project, 'Button Animation')
-    const { sheet } = this.createProjectAndSheet('Micro-anim', 'Button Animation')
+    const { sheet } = this.createProjectAndSheet('Micro-anim', 'Button Animation', { state: microState })
 
 
     this.createTheatreObject(
@@ -125,25 +136,25 @@ export default class Animations {
           {
             name: "button p",
             type: "2d", // dom 
-            properties: this.uiParams,
+            properties: this.btnParams,
             real: this.ui.querySelector('.button-start p'),
           },
           {
             name: "border-bottom",
             type: "2d", // dom 
-            properties: this.uiParams,
+            properties: this.btnParams,
             real: this.ui.querySelector('.border-bottom'),
           },
           {
             name: "border-top",
             type: "2d", // dom 
-            properties: this.uiParams,
+            properties: this.btnParams,
             real: this.ui.querySelector('.border-top'),
           },
         ],
     })
 
-   // this.playAnimations(project, sheet, 1)
+  
   }
 
   createIntroduction(camera) {
@@ -151,7 +162,7 @@ export default class Animations {
     // const sheet = this.createSheet(project, 'Camera Animation', '/sounds/initialisation.mp3')
    // const sheet = this.createSheet(project, 'Camera Animation')
 
-    const { sheet, project } = this.createProjectAndSheet('Introduction', 'Camera Animation', { state:  introductionState })
+    const { sheet } = this.createProjectAndSheet('Introduction', 'Camera Animation', { state:  introductionState })
     
     this.createTheatreObject(
       {
@@ -179,9 +190,14 @@ export default class Animations {
       }
     )
 
-    this.playAnimations(project, sheet, 1)
+    //this.playAnimations(project, sheet, 1)
   }
 
+  play(name, iterationCount) {
+    const { project, sheet } = this.anims.find(anim => anim.project_name === name)
+    project.ready.then(() => sheet.sequence.play({ iterationCount: iterationCount }))
+  }
+  
   
 
   createEnding() {
@@ -259,7 +275,9 @@ export default class Animations {
   }
   
 
+
   playAnimations(project, sheet, iterationCount: number) {
+   
     project.ready.then(() => sheet.sequence.play({ iterationCount: iterationCount }))
   }
 }

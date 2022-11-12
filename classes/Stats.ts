@@ -23,7 +23,7 @@ export default class Stats {
 		this.statsEl.showPanel(0);
         document.body.appendChild(this.statsEl.dom);
 		this.webglInfos = document.createElement('div');
-		this.webglInfos.classList.add('webgl-infos');
+		this.webglInfos.classList.add('webgl-infos txt_uppercase');
         document.querySelector('.ui').appendChild(this.webglInfos);
 		
 	}

@@ -1,15 +1,26 @@
 <template>
-    <div class="ui">   
-        <div class="debug-menu">
-            <NuxtLink to="/">HOME</NuxtLink>
-            <NuxtLink to="/studio">STUDIO</NuxtLink>
+    <div class="ui-permanent">
+    
+        <div class="ui-content">
+            <img src="/images/tr.svg" alt="">
+    
+            <nav>
+                <NuxtLink to="/">HOME</NuxtLink>
+                <NuxtLink to="/studio">STUDIO</NuxtLink>
+            </nav>
+    
+            <button class="button-fullscreen" @click="toggle">
+                <img src="/images/fullscreen.svg" alt="">
+            </button>
         </div>
+    
+    </div>
 
+    <div class="ui">   
+        
         <div class="end-credit">
-            <NuxtLink to="https://twitter.com/polygon1993" target="_blank" rel="noopener">@polygon1993</NuxtLink> 
-            for Trinity video assets and scenography. 
-
-            <p>Laylow Live experience from Olympia, Paris - 5 March 2020</p>
+            <NuxtLink class="txt_uppercase" to="https://twitter.com/polygon1993" target="_blank" rel="noopener">@polygon1993 for Trinity video assets and scenography. </NuxtLink> 
+            <p class="txt_uppercase">Laylow Live experience from Olympia, Paris - 5 March 2020</p>
             <img src="/images/trinity-logo.svg" alt="">
             <img src="/images/gobelins.svg" alt="">
             <img src="/images/lay-logo.svg" alt=""> 
@@ -20,13 +31,7 @@
             <p>START</p>
             <div class="border-bottom"></div>
         </button>
-        <!-- <button class="button-fullscreen" @click="toggle">
-            <img src="/images/fullscreen.svg" alt="">
-        </button>     -->
-    </div>
-
-    <div class="ui-permanent">
-
+       
     </div>
 
 
@@ -41,9 +46,10 @@ const audio_started = ref(false)
 const startAudio = () => {
      console.log('started')
      audio.start()
-     toggle()
+     // toggle()
      audio_started.value = true
     
+
      emitter.emit('audio_started')
 
      setTimeout(() => {
@@ -53,10 +59,18 @@ const startAudio = () => {
 </script>
 
 <style lang="scss">
+* {
+    margin: 0;
+    padding: 0;
+}
 
-//@import url('http://fonts.cdnfonts.com/css/matrix');
+body {
+    font-family: 'Matrix Code NFI';
+}
 
-
+.txt_uppercase {
+    text-transform: uppercase;
+}
 .webgl-infos {
 	position: absolute;
 	left: 10px;
@@ -72,11 +86,45 @@ const startAudio = () => {
     display: none;
 }
 
-.ui {
-    font-family: 'Matrix Code NFI', sans-serif;
-    //font-family: 'Matrix Code NFI', sans-serif;
+
+.ui-permanent {
+
     position: fixed;
-    top: 50px;
+    top: 0px;
+    width: 100%;
+   
+
+    .ui-content {
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+
+        nav {
+            a {
+                color: #1ECA9A;
+                font-size: 14px;
+                text-decoration: none;
+                margin: 0.5rem;
+            }
+        }
+
+        .button-fullscreen {
+            background: none;
+            border: none;
+            cursor: pointer;
+        
+        }
+    }
+
+
+
+
+}
+
+.ui {
+    position: fixed;
+    top: 0px;
     // z-index: 99999;
     width: 100vw;
 
@@ -90,37 +138,17 @@ const startAudio = () => {
         }
     }
     
-    .debug-menu {
-        display: flex;
-        justify-content: center;
-
-        a {
-            color:#1ECA9A;
-            font-size: 14px;
-            text-decoration: none;
-            margin: 0.5rem;
-        }
-    }
-    .button-fullscreen {
-        background: none;
-        border: none;
-        position: fixed;
-        top: 90%;
-        left: 50%;
-        cursor: pointer;
-        transform: translate(-50%, -50%);
-    }
-
+    
     .button-start {
         position: fixed;
-        top: 80%;
+        top: 90%;
         left: 50%;
         transform: translate(-50%, -50%);
         cursor: pointer;
         font-family: 'Matrix Code NFI', sans-serif;
         font-style: normal;
         font-weight: 400;
-        font-size: 16px;
+        font-size: 14px;
         letter-spacing: 0.345em;
         background: none;
         width: 200px;
@@ -137,11 +165,9 @@ const startAudio = () => {
         }
 
         p {
-            margin-block-end: 0;
-            margin-block-start: 0;
-            margin:0;
-            padding-top: 8px;
-            padding-bottom: 14px;
+
+            padding-top: 9px;
+            padding-bottom: 12px;
             //padding: 6px 22px 12px 22px;
         }
 
@@ -155,5 +181,4 @@ const startAudio = () => {
         }
     }
 }
-
 </style>

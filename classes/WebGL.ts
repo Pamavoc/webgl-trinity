@@ -58,7 +58,7 @@ export default class WebGL {
     // MANAGERS
     this.cameraManager = new CameraManager({ webgl: this})
     this.animations = useAnimations()
-  
+    this.animations.createAnimations(this.camera)
 
     // RAYCASTER
     this.raycast = new Raycaster(
@@ -71,7 +71,7 @@ export default class WebGL {
     // MATERIALS
     this.materials = new Materials({ webgl: this })
     this.setEvents();
-    this.loadMap('trinity-2.glb')
+    this.loadMap('trinity-3.glb')
 
 
     if (/debug/.test(window.location.href)) {
@@ -101,7 +101,6 @@ export default class WebGL {
   }
 
 
-
   removeOldMap = async () => {
     const old_map = this.scene.instance.children.find(child => child.name === "Scene")
     this.scene.instance.remove(old_map)
@@ -120,30 +119,38 @@ export default class WebGL {
     })
 
 
+   
+
     this.emitter.on('audio_started', () => {
 
       // trigger anim webgl
       // const target = new THREE.Vector3(0, 1, 0)
       // const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
       // console.log(cube)
+      this.animations.play('Micro-anim')
       
-      this.animations.createMicroInteraction()
-      this.animations.createIntroduction(this.camera)
-      this.materials.playVideos()
-      this.audio_manager = useAudio(this.emitter)
-     
-      this.audio_manager.start( {
-           onBeat: ()=> {
 
-            const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
-            this.emitter.emit('beat_sent', average)
-           }, 
-           live: false,
-           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-ss.mp3', '/sounds/burningman-s.mp3']
-      })    
+    
+      setTimeout(() => {
+        // this.animations.createIntroduction(this.camera)
+        this.animations.play('Introduction')
 
+        this.materials.playVideos()
+        this.audio_manager = useAudio(this.emitter)
+       
+        this.audio_manager.start( {
+             onBeat: ()=> {
   
-      this.audio_started = true 
+              const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
+              this.emitter.emit('beat_sent', average)
+             }, 
+             live: false,
+             playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-ss.mp3', '/sounds/burningman-s.mp3']
+        })    
+        this.audio_started = true 
+      }, 2300);
+    
+
       // window.audio = this.audio_manager
       
     })

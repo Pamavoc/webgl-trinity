@@ -591,6 +591,43 @@
             "trackIdByPropPath": {
               "[\"opacity\"]": "EEA-KN9xQI"
             }
+          },
+          "ui": {
+            "trackData": {
+              "t0fd9M9B7d": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "ui:[\"opacity\"]",
+                "keyframes": [
+                  {
+                    "id": "ux8sJyf5ag",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 1
+                  },
+                  {
+                    "id": "28ga0n2rZA",
+                    "position": 0.967,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"opacity\"]": "t0fd9M9B7d"
+            }
           }
         }
       }
@@ -598,6 +635,8 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
+    "2RseZ4TqifIQ1-BB",
+    "9nYHEVVuF_vCrI56",
     "YtatyU_sqwzZQIqJ",
     "m_dLPZhxi5jaweqY",
     "8AWtL__tW7L3zOTE",

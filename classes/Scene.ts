@@ -12,7 +12,6 @@ export default class Scene {
   webgl: any;
   uniforms: any;
   material: any;
-  debug: any
   params: any
   lights: any
   postProcess: any

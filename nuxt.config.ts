@@ -18,5 +18,12 @@ export default defineNuxtConfig({
 		define: {
 			"process.env.TESS_ENV": process.env.ENV,
 		},
+		css: {
+            preprocessorOptions: {
+                scss: {
+                    additionalData: `@import "@/assets/styles/main.scss";`
+                },
+            },
+        },
 	} 
 })
