@@ -1,4 +1,4 @@
-# Laylow Trinity Olympia Concert - WebGL Experiment   
+# Laylow Trinity Olympia concert - WebGL experiment   
 
 Webaudio experience made @gobelins school during a 4 days workshop. It's a recreation of Laylow concert @Olympia before Covid.
 
