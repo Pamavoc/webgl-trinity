@@ -23,12 +23,12 @@ export default defineNuxtConfig({
 				{ property: 'og:url', content: 'https://webgl-trinity.vercel.app/' },
 				{ property: 'og:title', content: '' },
 				{ property: 'og:description', content: '' },
-				{ property: 'og:image', content: '/images/images/meta.jpg' },
+				{ property: 'og:image', content: '/meta.jpg' },
 				{ property: 'twitter:card', content: 'summary_large_image' },
 				{ property: 'twitter:url', content: 'https://webgl-trinity.vercel.app/' },
 				{ property: 'twitter:title', content: 'LAYLOW - OLYMPIA LIVE EXPERIENCE' },
 				{ property: 'twitter:description', content: '' },
-				{ property: 'twitter:image', content: '/images/images/meta.jpg' }
+				{ property: 'twitter:image', content: '/meta.jpg' }
 			],
 		}
 	},
