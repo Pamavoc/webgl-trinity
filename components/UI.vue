@@ -19,20 +19,34 @@
     <div class="ui">   
         
         <div class="end-credit">
-            <NuxtLink class="txt_uppercase" to="https://twitter.com/polygon1993" target="_blank" rel="noopener">@polygon1993 for Trinity video assets and scenography. </NuxtLink> 
-            <p class="txt_uppercase">Laylow Live experience from Olympia, Paris - 5 March 2020</p>
-            <img src="/images/trinity-logo.svg" alt="">
-            <img src="/images/gobelins.svg" alt="">
-            <img src="/images/lay-logo.svg" alt=""> 
-        </div>
+        
+            <div class="top-credit">
+                <p class="txt_uppercase">Thanks for watching </p>
+                <p class="txt_uppercase">Laylow <NuxtLink class="txt_uppercase" to="https://www.olympiahall.com/" target="_blank" rel="noopener">@Olympia</NuxtLink></p>
+            </div>
 
-        <button class="button-start" @click="startAudio">
+            <div class="border"></div>
+
+            <div class="link"><NuxtLink class="txt_uppercase" to="https://twitter.com/polygon1993" target="_blank" rel="noopener">@polygon1993</NuxtLink> <p class="txt_uppercase">video assets</p></div>
+            <div class="link"><NuxtLink class="txt_uppercase" to="https://eliottgrunewald.xyz/work" target="_blank" rel="noopener">@eliottgrunewald</NuxtLink> <p class="txt_uppercase">trinity typography</p></div>
+            <div class="link"><NuxtLink class="txt_uppercase" to="https://www.instagram.com/jey.laylow/" target="_blank" rel="noopener">@laylow</NuxtLink>  <NuxtLink class="txt_uppercase" to="https://laylow.lnk.to/Trinity" target="_blank" rel="noopener">MUSIC</NuxtLink></div> 
+            <div class="link"><NuxtLink class="txt_uppercase" to="https://twitter.com/pamavoc__" target="_blank" rel="noopener">@pamavoc</NuxtLink>  <NuxtLink class="txt_uppercase" to="https://laylow.lnk.to/Trinity" target="_blank" rel="noopener">3D AND DEVELOPMENT</NuxtLink></div> 
+
+            <div class="logos">
+                <NuxtLink to="https://open.spotify.com/album/0JMZmkRaNLaGUWayBrHOMa"><img src="/images/trinity-logo.svg" alt=""></NuxtLink>
+                <NuxtLink to="https://www.gobelins.fr/"><img src="/images/gobelins-light.svg" alt="Gobelins"></NuxtLink>
+                <NuxtLink to="https://www.laylow.fr/"><img src="/images/lay-logo.svg" alt=""></NuxtLink>
+            </div>
+
+            <p class="txt_uppercase disclaimer">Project done as a class project, I don't have any rights for typography used for logos and videos assets. It's a proof of concept.</p>
+        </div>
+    </div>
+
+    <button class="button-start" @click="startAudio">
             <div class="border-top"></div>
             <p>START</p>
             <div class="border-bottom"></div>
-        </button>
-       
-    </div>
+    </button>
 
 
 </template>
@@ -92,13 +106,17 @@ body {
     position: fixed;
     top: 0px;
     width: 100%;
-   
+    z-index: 2;
+
+  
 
     .ui-content {
         display:flex;
         align-items: center;
         justify-content: space-between;
         padding: 1rem 2rem;
+
+     
 
         nav {
             a {
@@ -122,24 +140,7 @@ body {
 
 }
 
-.ui {
-    position: fixed;
-    top: 0px;
-    // z-index: 99999;
-    width: 100vw;
-
-
-    .end-credit {
-        padding:2rem;
-        overflow: hidden;
-        
-        img {
-            width: 100px;
-        }
-    }
-    
-    
-    .button-start {
+.button-start {
         position: fixed;
         top: 90%;
         left: 50%;
@@ -180,5 +181,86 @@ body {
             transform: translate(-50%, -50%) scale(0.98);
         }
     }
+
+.ui {
+    position: fixed;
+    top: 120px;
+    
+    
+
+    @media screen and (min-width: 1024px) {
+        top: 200px;
+    }
+
+    
+        
+    // z-index: 99999;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1ECA9A;
+
+    a {
+        color: #1ECA9A;
+    }
+    
+
+    .end-credit {
+        overflow: hidden;
+        max-width: 1600px;
+      
+        @media screen and (max-width: 768px) {
+            width: 100%;
+        }
+
+        @media screen and (min-width: 1024px) {
+            width: 30%;
+            max-width: 500px;
+        }
+
+        
+        font-size: 12px;
+        padding: 1rem 2rem;
+
+        .top-credit {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+    
+    }
+
+    .disclaimer  {
+        font-size: 10px;
+        margin-top: 24px;
+    }
+
+    .link {
+        display: flex;
+        justify-content: space-between;
+        margin: 16px 0px;
+    }
+
+    .border {
+            height: 1px;
+            width: 100%;
+            background: #1ECA9A;
+    }
+
+    .logos {
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        height: fit-content;
+        border-top: #1ECA9A solid 1px;
+
+        img {
+           height: 36px;
+        }
+    }
+
 }
 </style>

@@ -137,19 +137,19 @@ export default class Animations {
             name: "button p",
             type: "2d", // dom 
             properties: this.btnParams,
-            real: this.ui.querySelector('.button-start p'),
+            real: document.querySelector('.button-start p'),
           },
           {
             name: "border-bottom",
             type: "2d", // dom 
             properties: this.btnParams,
-            real: this.ui.querySelector('.border-bottom'),
+            real: document.querySelector('.border-bottom'),
           },
           {
             name: "border-top",
             type: "2d", // dom 
             properties: this.btnParams,
-            real: this.ui.querySelector('.border-top'),
+            real: document.querySelector('.border-top'),
           },
         ],
     })
@@ -198,11 +198,7 @@ export default class Animations {
     project.ready.then(() => sheet.sequence.play({ iterationCount: iterationCount }))
   }
   
-  
 
-  createEnding() {
-    console.log('ending')
-  }
 
   createTheatreObject({sheet, objects}) {
 
