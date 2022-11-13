@@ -185,7 +185,7 @@ body {
 .ui {
     position: fixed;
     top: 120px;
-    
+    opacity: 0;
     
 
     @media screen and (min-width: 1024px) {
