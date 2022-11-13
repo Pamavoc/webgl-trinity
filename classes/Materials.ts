@@ -6,17 +6,13 @@ import cableVert from '@/assets/glsl/cable/cable.vert';
 
 import screenFrag from '@/assets/glsl/screen/screen.frag';
 import screenFrag2 from '@/assets/glsl/screen/screen2.frag';
-import screenFrag3 from '@/assets/glsl/screen/screen3.frag';
 import screenVert from '@/assets/glsl/screen/screen.vert';
 
 import trinityFrag from '@/assets/glsl/trinity/trinity.frag';
 import trinityVert from '@/assets/glsl/trinity/trinity.vert';
 
-
-
 import cubeFrag from '@/assets/glsl/cube/cube.frag';
 import cubeVert from '@/assets/glsl/cube/cube.vert';
-
 
 
 export default class Materials {
@@ -52,7 +48,6 @@ export default class Materials {
 
 	create() {
 		
-
 
 		// video
 		this.cubeMaterial2 = new THREE.RawShaderMaterial( {
@@ -96,7 +91,7 @@ export default class Materials {
 				uLineStrength: { value: 0.11 },
 				uAverage: { value:0}
 			},
-			transparent: true,
+			transparent: false,
 			fragmentShader: screenFrag,
 			vertexShader: screenVert,
 		} );
@@ -120,7 +115,7 @@ export default class Materials {
 				uLineStrength: { value: 0.11 },
 				uAverage: { value:0}
 			},
-			transparent: true,
+			transparent: false,
 			fragmentShader: screenFrag2,
 			vertexShader: screenVert,
 		} );
@@ -160,35 +155,28 @@ export default class Materials {
 
 		this.solMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color(0x2B2B2B), roughness: 1})
 
-		const target = new THREE.Vector3(0, 1, 0)
-
 		this.webgl.emitter.on("song_start", (audio_number)=> {
 
-			this.audio_number = audio_number
+			this.audio_number = audio_number		
 			console.log(`AUDIO NUMBER : ${audio_number}`)
-			//console.log("intro end")
-	  
+
 		
 			if(this.audio_number === 0) {
 				this.trinityMaterial.uniforms.uColor.value = { r: 30/255, g: 202/255, b:154/255 };
 			}
 		
 			if(this.audio_number === 1) {
+				
 				this.changeMaterial()
-				this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
 			}
 
 			if(this.audio_number === 2) {
-				this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
-
+				
 				this.screenMaterial.uniforms.uColor.value = {r: 0.99, g: 0.56, b: 0.04}; // {r: 0.95, g: 0.38, b: 0.07}
 				this.screenMaterial.uniforms.uAlpha.value = 0.8
 
 				this.screenMaterial2.uniforms.uColor.value = {r: 0.95, g: 0.38, b: 0.07}
 				this.screenMaterial2.uniforms.uAlpha.value = 0.8
-
-
-				// this.webgl.animations.cameraMoveSong(this.audio_number, this.webgl.camera.instance, target)
 
 				this.trinityMaterial.uniforms.uColor.value = { r: 191/255, g: 96/255, b: 90/255 };
 				this.cableMaterial.uniforms.uColor2.value = {r: 0.99, g: 0.56, b: 0.04}
@@ -198,12 +186,10 @@ export default class Materials {
 
 		
 
-
 			this.cableMaterial.uniforms.uSoundNumber.value = audio_number
 			this.screenMaterial.uniforms.uSoundNumber.value = audio_number
 			this.screenMaterial2.uniforms.uSoundNumber.value = audio_number
 			this.trinityMaterial.uniforms.uSoundNumber.value = audio_number
-			
 		})
 
 	}
@@ -237,11 +223,9 @@ export default class Materials {
 
 	changeMaterial() {
 		this.webgl.scene.instance.traverse(child => {
-			if(/cube-face/ig.test(child.name)) {
-				child.material = this.screenMaterial
-			}
+			
 
-			if(/screen/ig.test(child.name)) {
+			if(/screen/ig.test(child.name) || /cube-face/ig.test(child.name)) {
 				child.material = this.screenMaterial
 			}
 
@@ -354,12 +338,11 @@ export default class Materials {
 			this.screenMaterial.uniforms.uSound3.value  = this.webgl.audio_manager.values[2]
 			this.screenMaterial.uniforms.uSound4.value  = this.webgl.audio_manager.values[3]
 			this.screenMaterial.uniforms.uSound5.value  = this.webgl.audio_manager.values[4]
-
+			this.screenMaterial.uniforms.uHeight.value = this.webgl.audio_manager.volume
 
 			this.screenMaterial2.uniforms.uSound2.value = this.webgl.audio_manager.values[1]
 			this.screenMaterial2.uniforms.uHeight.value = this.webgl.audio_manager.volume
-		
-			this.screenMaterial.uniforms.uHeight.value = this.webgl.audio_manager.volume
+	
 
 		}
 		

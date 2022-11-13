@@ -19,6 +19,7 @@ export default class PostProcess {
         this.webgl = scene.webgl;
         this.camera = scene.camera;
         this.composer = new EffectComposer(this.renderer)    
+        
         this.params = {
             blendFunction: BlendFunction.ADD,
             blendFunctionNoise: BlendFunction.COLOR_BURN, // substract // MULTIPLY // Overlay
@@ -48,10 +49,7 @@ export default class PostProcess {
         const smaa = new SMAAEffect()
 
 		this.effect.inverted = true;
-		//const effectPass = new EffectPass(this.camera, this.effect);
-		//this.composer.addPass(effectPass);
         this.composer.addPass(new EffectPass(this.camera, smaa, this.effect, noise));
-        
     }
 
     tweak() {
@@ -91,11 +89,7 @@ export default class PostProcess {
         })
     }
 
-
-
     render() {
-        //this.composer.render(this.scene.instance, this.camera);
-        // this.renderer.render(this.scene.instance, this.camera);
         this.composer.render();
     }
 

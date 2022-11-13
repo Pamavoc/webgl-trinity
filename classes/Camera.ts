@@ -13,6 +13,7 @@ export default class Camera {
   coordinates: any
   lookTarget: any
   controls: any
+  
 
   constructor(fov: number, width: number, near: number, far: number, height?: number) {
     this.instance = new PerspectiveCamera(fov, width, near, far);
@@ -21,13 +22,13 @@ export default class Camera {
     this.instance.position.z =  0
    
     //this.instance = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 0, 10000 );
-    //this.animations = useAnimations()
-
-    
   }
 
+  resize(cam) {
+    cam.aspect = window.innerWidth / window.innerHeight;
+    cam.updateProjectionMatrix();
+  }
   
-
   tweak() {
     const debug = useDebug();
 
@@ -36,10 +37,11 @@ export default class Camera {
       expanded: false,
     });
 
-
     camera_page.addInput(this.instance, 'position')
-
-   
+    camera_page.addInput(this.instance, 'rotation')
+    camera_page.addInput(this.instance, 'zoom')
+    camera_page.addInput(this.instance, 'fov')
+  
   }
 
 

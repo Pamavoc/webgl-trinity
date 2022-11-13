@@ -22,6 +22,8 @@ class AudioManager {
 
 	
 		this.emitter = emitter
+		this.alreadyPlayed = false
+		this.endOfPlaylist = false
 
 		//this.emitter = emitter
 		this.fftSize = 1024
@@ -67,7 +69,6 @@ class AudioManager {
 
 	start({ onLoad = null, onBeat = null, live = true, analyze = true, debug = false, playlist = ['/sounds/initialisation.mp3', '/sounds/megatron-s.mp3', '/sounds/burningman-s.mp3'], shutup = false, src = null } = {}) {
 
-		console.log(onBeat)
 		this.debug = debug
 		this.playlist = playlist
 		this.live = live
@@ -113,11 +114,12 @@ class AudioManager {
 			this.currentPlay = 0
 		}
 
-		console.log( this.currentPlay, this.playlist, this.playlist.length)
+		// console.log( this.currentPlay, this.playlist, this.playlist.length)
 
-		if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3") {
+		if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3" && this.alreadyPlayed === false) {
 			
 			this.emitter.emit("song_start", 0)
+			this.alreadyPlayed = true
 
 		} else if(this.playlist[this.currentPlay] === "/sounds/megatron-ss.mp3") {
 			
@@ -126,28 +128,34 @@ class AudioManager {
 
 		} else if(this.playlist[this.currentPlay] === "/sounds/burningman-s.mp3") {
 
-			console.log("BURNINGMAN")
 			this.emitter.emit("song_start", 2)
 			
-		}
-
-
-		this._src = this.playlist[this.currentPlay ];
-		console.log(this._src)
-
+		} else if(this.playlist[this.currentPlay] === "/sounds/initialisation.mp3" && this.alreadyPlayed === true) {
+			
+			this.endOfPlaylist = true;
+			this.audio.pause()
+			this.emitter.emit("song_end")
 		
-
-		this.audio = document.createElement('audio')
-		this.audio.src = this._src
-		this.audio.loop = false
-		this.audio.play()
-		this.audio.addEventListener('ended', this.playNext)
-
-		if (this.audioSource) {
-			this.audioSource.disconnect(this.masterGain)
 		}
-		this.audioSource = this.context.createMediaElementSource(this.audio)
-		this.audioSource.connect(this.masterGain)
+
+
+		if(!this.endOfPlaylist) {
+			this._src = this.playlist[this.currentPlay ];
+			console.log(this._src)
+	
+			this.audio = document.createElement('audio')
+			this.audio.src = this._src
+			this.audio.loop = false
+			this.audio.play()
+			this.audio.addEventListener('ended', this.playNext)
+
+			if (this.audioSource) {
+				this.audioSource.disconnect(this.masterGain)
+			}
+			this.audioSource = this.context.createMediaElementSource(this.audio)
+			this.audioSource.connect(this.masterGain)
+		}
+		
 
 	}
 

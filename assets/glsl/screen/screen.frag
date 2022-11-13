@@ -14,7 +14,7 @@ uniform float uSoundNumber;
 
 varying float vNoise;
 varying vec2 vUv;
-varying float vPosition;
+varying vec3 vPosition;
 
 vec3 color;
 

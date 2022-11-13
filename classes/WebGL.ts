@@ -8,8 +8,12 @@ import Scene from '@/classes/Scene';
 import Materials from '@/classes/Materials';
 import useAudio from '@/composables/useAudio';
 import useAnimations from '@/composables/useAnimations';
+import CameraManager from '@/classes/managers/CameraManager'
+import Stats from '@/classes/Stats';
+
 
 export default class WebGL {
+  cameraManager: CameraManager
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   renderer: Renderer;
@@ -23,7 +27,7 @@ export default class WebGL {
   height: number;
   debug: boolean;
   params: ObjectType;
-
+  stats: any
 
   raycast: Raycaster;
   emitter: any;
@@ -32,12 +36,11 @@ export default class WebGL {
   audio_manager: any;
  
 
-  constructor({ emitter }) {
+  constructor({ emitter }: any) {
+    
     // ARGS
     this.emitter = emitter;
  
-
-    
     // VARS
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -51,61 +54,37 @@ export default class WebGL {
     this.renderer = new Renderer(this.width, this.height);
     this.scene = new Scene(this);
 
+
+    // MANAGERS
+    this.cameraManager = new CameraManager({ webgl: this})
+    this.animations = useAnimations()
+    this.animations.createAnimations(this.camera)
+
+    // RAYCASTER
     this.raycast = new Raycaster(
       this.scene.instance,
       this.camera.instance,
       this.renderer.instance
     );
 
-    
-   
+      
+    // MATERIALS
     this.materials = new Materials({ webgl: this })
     this.setEvents();
-    this.loadMap('trinity-2.glb')
+    this.loadMap('trinity-3.glb')
 
-    this.animations = useAnimations()
-
-
-    this.emitter.on('audio_started', () => {
-
-      // trigger anim webgl
-      const target = new THREE.Vector3(0, 1, 0)
-      const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
-      console.log(cube)
-      this.animations.start(this.camera.instance, target)
-
-
-      this.materials.playVideos()
-      this.audio_manager = useAudio(this.emitter)
-     
-      this.audio_manager.start( {
-           onBeat: ()=> {
-          
-            const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
-            console.log(this.audio_manager.volume)
-            console.log(average)
-            this.emitter.emit('beat_sent', average)
-           }, 
-           live: false,
-           playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-ss.mp3', '/sounds/burningman-s.mp3']
-      })    
-
-  
-      this.audio_started = true
-      // window.audio = this.audio_manager
-      
-    })
 
     if (/debug/.test(window.location.href)) {
       this.debug = true
       this.camera.tweak()
       this.scene.postProcess.tweak()
       this.materials.tweak()
+      this.stats = new Stats(this)
     }
 
 
+    console.log('%c Built by @pamavoc ', 'background: #090909; color: #1ECA9A');
   }
-
 
 
   switchMap = (map) => {
@@ -122,7 +101,6 @@ export default class WebGL {
   }
 
 
-
   removeOldMap = async () => {
     const old_map = this.scene.instance.children.find(child => child.name === "Scene")
     this.scene.instance.remove(old_map)
@@ -131,9 +109,57 @@ export default class WebGL {
 
   }
 
+  experienceEvents = () => {
+    this.emitter.on('studio', () => {
+      this.animations.studio.ui.restore()
+    })
+
+    this.emitter.on('home', ()=> {
+      this.animations.studio.ui.hide()
+    })
+
+
+   
+
+    this.emitter.on('audio_started', () => {
+
+      // trigger anim webgl
+      // const target = new THREE.Vector3(0, 1, 0)
+      // const cube = this.scene.instance.getObjectByProperty('name', 'cube-base');
+      // console.log(cube)
+      this.animations.play('Micro-anim')
+      
+
+    
+      setTimeout(() => {
+        // this.animations.createIntroduction(this.camera)
+        this.animations.play('Introduction')
+
+        this.materials.playVideos()
+        this.audio_manager = useAudio(this.emitter)
+       
+        this.audio_manager.start( {
+             onBeat: ()=> {
+  
+              const average = this.audio_manager.values.reduce((a, b) => a + b, 0) / this.audio_manager.values.length;
+              this.emitter.emit('beat_sent', average)
+             }, 
+             live: false,
+             playlist: ['/sounds/initialisation.mp3', '/sounds/megatron-ss.mp3', '/sounds/burningman-s.mp3']
+        })    
+        this.audio_started = true 
+      }, 2300);
+    
+
+      // window.audio = this.audio_manager
+      
+    })
+  }
+
 
   setEvents = () => {
     this.addEvents();
+    this.experienceEvents();
     this.onResize();
   };
 
@@ -173,6 +199,9 @@ export default class WebGL {
         //console.log(this.audio_manager.values)
     }
 
+    if(this.debug) {
+      this.stats.update()
+    }
 
     // Scene
     this.scene.update();
