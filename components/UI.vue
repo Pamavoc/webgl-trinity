@@ -2,7 +2,7 @@
     <div class="ui-permanent">
     
         <div class="ui-content">
-            <img src="/images/tr.svg" alt="">
+            <img src="public/images/tr.svg" alt="">
     
             <nav>
                 <NuxtLink to="/">HOME</NuxtLink>
