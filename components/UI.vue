@@ -2,7 +2,7 @@
     <div class="ui-permanent">
     
         <div class="ui-content">
-            <img src="public/images/tr.svg" alt="">
+            <img src="/images/tr.svg" alt="">
     
             <nav>
                 <NuxtLink to="/">HOME</NuxtLink>
@@ -10,7 +10,7 @@
             </nav>
     
             <button class="button-fullscreen" @click="toggle">
-                <img src="public/images/fullscreen.svg" alt="">
+                <img src="/images/fullscreen.svg" alt="">
             </button>
         </div>
     
@@ -34,8 +34,8 @@
 
             <div class="logos">
                 <NuxtLink to="https://open.spotify.com/album/0JMZmkRaNLaGUWayBrHOMa"><img src="/images/trinity-logo.svg" alt=""></NuxtLink>
-                <NuxtLink to="https://www.gobelins.fr/"><img src="public/images/gobelins-light.svg" alt="Gobelins"></NuxtLink>
-                <NuxtLink to="https://www.laylow.fr/"><img src="public/images/lay-logo.svg" alt=""></NuxtLink>
+                <NuxtLink to="https://www.gobelins.fr/"><img src="/images/gobelins-light.svg" alt="Gobelins"></NuxtLink>
+                <NuxtLink to="https://www.laylow.fr/"><img src="/images/lay-logo.svg" alt=""></NuxtLink>
             </div>
 
             <p class="txt_uppercase disclaimer">Project done as a class project, I don't have any rights for typography used for logos and videos assets. It's a proof of concept.</p>
