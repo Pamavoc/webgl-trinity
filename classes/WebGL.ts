@@ -95,7 +95,6 @@ export default class WebGL {
 
   loadMap = async (new_map) => {
     this.loader.load(`/${new_map}`).then((result) => {
-      console.log("new map added")
       this.scene.instance.add(result)
     })
   }
@@ -104,7 +103,6 @@ export default class WebGL {
   removeOldMap = async () => {
     const old_map = this.scene.instance.children.find(child => child.name === "Scene")
     this.scene.instance.remove(old_map)
-    console.log('old map removed')
     return 'old map removed'
 
   }

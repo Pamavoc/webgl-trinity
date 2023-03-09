@@ -4,7 +4,7 @@
         <div class="ui-content">
             <img src="~/assets/images/tr.svg" alt="">
     
-            <nav>
+            <nav v-if="devMode">
                 <NuxtLink to="/">HOME</NuxtLink>
                 <NuxtLink to="/studio">STUDIO</NuxtLink>
             </nav>
@@ -30,7 +30,7 @@
             <div class="link"><NuxtLink class="txt_uppercase" to="https://twitter.com/polygon1993" target="_blank" rel="noopener">@polygon1993</NuxtLink> <p class="txt_uppercase">video assets</p></div>
             <div class="link"><NuxtLink class="txt_uppercase" to="https://eliottgrunewald.xyz/work" target="_blank" rel="noopener">@eliottgrunewald</NuxtLink> <p class="txt_uppercase">trinity typography</p></div>
             <div class="link"><NuxtLink class="txt_uppercase" to="https://www.instagram.com/jey.laylow/" target="_blank" rel="noopener">@laylow</NuxtLink>  <NuxtLink class="txt_uppercase" to="https://laylow.lnk.to/Trinity" target="_blank" rel="noopener">MUSIC</NuxtLink></div> 
-            <div class="link"><NuxtLink class="txt_uppercase" to="https://twitter.com/pamavoc__" target="_blank" rel="noopener">@pamavoc</NuxtLink>  <NuxtLink class="txt_uppercase" to="https://laylow.lnk.to/Trinity" target="_blank" rel="noopener">3D AND DEVELOPMENT</NuxtLink></div> 
+            <div class="link"><NuxtLink class="txt_uppercase" to="https://twitter.com/pamavoc__" target="_blank" rel="noopener">@pamavoc</NuxtLink>  <p class="txt_uppercase" target="_blank" rel="noopener">3D AND DEVELOPMENT</p></div> 
 
             <div class="logos">
                 <NuxtLink to="https://open.spotify.com/album/0JMZmkRaNLaGUWayBrHOMa"><img src="~/assets/images/trinity-logo.svg" alt=""></NuxtLink>
@@ -39,10 +39,16 @@
             </div>
 
             <p class="txt_uppercase disclaimer">Project done as a class project, I don't have any rights for typography used for logos and videos assets. It's a proof of concept.</p>
+        
+            <button class="button-start mt-4" @click="startAudio()" id="restart">
+                <div class="border-top"></div>
+                <p>RE-PLAY</p>
+                <div class="border-bottom"></div>
+            </button>
         </div>
     </div>
 
-    <button class="button-start" @click="startAudio">
+    <button class="button-start" id="start" @click="startAudio">
             <div class="border-top"></div>
             <p>START</p>
             <div class="border-bottom"></div>
@@ -54,7 +60,7 @@
 const { toggle } = useFullscreen()
 const emitter = useEmitter()
 const audio = useHowler()
-
+const devMode = useDevMode()
 const audio_started = ref(false)
 
 const startAudio = () => {
@@ -138,6 +144,10 @@ body {
 
 
 
+}
+
+.mt-4 {
+    margin-top: 16px;
 }
 
 .button-start {

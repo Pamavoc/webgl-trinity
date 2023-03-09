@@ -1,0 +1,1 @@
+export const useDevMode = () => useState<boolean>('devMode', () => false)

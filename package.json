@@ -12,7 +12,7 @@
     "@vueuse/nuxt": "^9.3.1",
     "howler": "latest",
     "mitt": "^3.0.0",
-    "nuxt": "^3.0.0-rc.13",
+    "nuxt": "^3.2.3",
     "postprocessing": "^6.29.0",
     "stats.js": "^0.17.0",
     "three": "latest",

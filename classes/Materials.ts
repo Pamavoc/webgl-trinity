@@ -158,7 +158,7 @@ export default class Materials {
 		this.webgl.emitter.on("song_start", (audio_number)=> {
 
 			this.audio_number = audio_number		
-			console.log(`AUDIO NUMBER : ${audio_number}`)
+			// console.log(`AUDIO NUMBER : ${audio_number}`)
 
 		
 			if(this.audio_number === 0) {
@@ -305,18 +305,18 @@ export default class Materials {
 		});
 
 		cable_page.addInput(screen_params, 'alpha', {min: 0, max: 1}).on('change', (ev) => {
-			console.log(ev.value)
+			// console.log(ev.value)
 			this.cableMaterial.uniforms.uAlpha.value = cable_params.alpha;
 		});
 
 		screen_page.addInput(screen_params, 'color1', color_options).on('change', (ev) => {
-			console.log(ev.value)
+			// console.log(ev.value)
 			this.screenMaterial.uniforms.uColor.value = screen_params.color1;
 		});
 
 
 		screen_page.addInput(screen_params, 'alpha', {min: 0, max: 1}).on('change', (ev) => {
-			console.log(ev.value)
+			// console.log(ev.value)
 			this.screenMaterial.uniforms.uAlpha.value = screen_params.alpha;
 		});
 		

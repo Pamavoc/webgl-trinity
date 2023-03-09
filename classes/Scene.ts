@@ -39,7 +39,6 @@ export default class Scene {
     this.createFog();
     this.controls = new Controls(this.camera, this.renderer);
     this.transition = new TransitionCamera({ webgl: this.webgl, scene: this })
-    console.log(this.controls)
   
     // this.changeFog('green')
    

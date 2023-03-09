@@ -66,7 +66,10 @@ export default class Animations {
   }
 
   createAnimations(camera) {
-    this.createStartAnim()
+    const btnStart = document.querySelector('#start')
+    const btnReStart = document.querySelector('#restart')
+    this.createStartAnim(btnStart)
+    this.createStartAnim(btnReStart)
     this.createIntroduction(camera)
   }
 
@@ -123,7 +126,7 @@ export default class Animations {
   }
 
 
-  createStartAnim() {
+  createStartAnim(btnStart: Element) {
     //const project = this.createProject('Micro-anim')
     //const sheet = this.createSheet(project, 'Button Animation')
     const { sheet } = this.createProjectAndSheet('Micro-anim', 'Button Animation', { state: microState })
@@ -137,19 +140,19 @@ export default class Animations {
             name: "button p",
             type: "2d", // dom 
             properties: this.btnParams,
-            real: document.querySelector('.button-start p'),
+            real: btnStart.querySelector('p'),
           },
           {
             name: "border-bottom",
             type: "2d", // dom 
             properties: this.btnParams,
-            real: document.querySelector('.border-bottom'),
+            real: btnStart.querySelector('.border-bottom'),
           },
           {
             name: "border-top",
             type: "2d", // dom 
             properties: this.btnParams,
-            real: document.querySelector('.border-top'),
+            real: btnStart.querySelector('.border-top'),
           },
         ],
     })
