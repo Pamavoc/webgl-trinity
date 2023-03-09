@@ -562,6 +562,30 @@
                 "__debugName": "canvas:[\"opacity\"]",
                 "keyframes": [
                   {
+                    "id": "7c5P0utacP",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 0.1
+                  },
+                  {
+                    "id": "SPg2o_6vOm",
+                    "position": 1.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "value": 1
+                  },
+                  {
                     "id": "HMaYHNmFFZ",
                     "position": 87.6,
                     "connectedRight": true,
@@ -659,6 +683,7 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
+    "UAzhVMqLA1rNQZeQ",
     "5VWIPwH3lq79VYzU",
     "H6bQ-uWKF_JetxSW",
     "lRQ90fu3mFtXsn_M",
